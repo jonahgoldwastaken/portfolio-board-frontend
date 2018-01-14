@@ -1,0 +1,58 @@
+{
+    "extends": "eslint:recommended",
+    "parserOptions": {
+        "ecmaVersion": 2017,
+        "sourceType": "module",
+        "impliedStrict": true
+    },
+    "env": {
+        "node": true,
+        "es6": true
+    },
+    "rules": {
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "indent": [
+            "error",
+            4
+        ],
+        "no-var": "warn",
+        "block-scoped-var": "error",
+        "semi": [
+            "error",
+            "never"
+        ],
+        "max-len": [
+            "warn",
+            {
+                "code": 80
+            }
+        ],
+        "comma-dangle": [
+            "error",
+            {
+                "arrays": "never",
+                "objects": "never",
+                "imports": "never",
+                "exports": "never",
+                "functions": "ignore"
+            }
+        ],
+        "array-bracket-newline": [
+            "error",
+            {
+                "multiline": true,
+                "minItems": 2
+            }
+        ],
+        "array-element-newline": [
+            "error",
+            {
+                "multiline": true,
+                "minItems": 2
+            }
+        ]
+    }
+}

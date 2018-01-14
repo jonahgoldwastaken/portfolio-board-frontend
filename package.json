@@ -1,0 +1,30 @@
+{
+  "name": "socket-hub-frontend",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack -d --hide-modules --progress",
+    "prod": "webpack -p --hide-modules --progress",
+    "watch": "webpack-dev-server --progress --colors --https",
+    "lint": "eslint --fix src/**/*.js"
+  },
+  "author": "Jonah Meijers",
+  "license": "ISC",
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "socket.io": "^2.0.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.36",
+    "@babel/preset-env": "^7.0.0-beta.36",
+    "babel-loader": "^8.0.0-beta.0",
+    "css-loader": "^0.28.8",
+    "eslint": "^4.14.0",
+    "eslint-loader": "^1.9.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "html-webpack-plugin": "^2.30.1",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7"
+  }
+}

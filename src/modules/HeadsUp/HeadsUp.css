@@ -1,0 +1,50 @@
+.pop-up {
+    position: fixed;
+    top: 3rem;
+    right: 2rem;
+    width: 24rem;
+    height: 8rem;
+    padding: 1em 1em;
+    display: flex;
+    flex-flow: row;
+    justify-content: flex-start;
+    align-items: space-around;
+    background: whitesmoke;
+    border-radius: var(--border-radius);
+    box-shadow: 0 0.6em 0.5em -0.4em rgba(0, 0, 0, 0.4);
+    animation: slide-in-right 3s ease forwards;
+    user-select: none;
+    pointer-events: none;
+}
+
+.pop-up img {
+    display: block;
+    margin-right: 1em;
+    height: 100%;
+    object-fit: contain;
+}
+
+.pop-up h1 {
+    margin-top: 0;
+    font-size: 1.2em;
+}
+
+.pop-up p {
+    display: block;
+    font-size: 1em;
+}
+
+@keyframes slide-in-right {
+    0% {
+        right: -24rem;
+    }
+    20% {
+        right: 2rem;
+    }
+    80% {
+        right: 2rem;
+    }
+    100% {
+        right: -24rem;
+    }
+}

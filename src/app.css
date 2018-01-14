@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css?family=Lora:400,400i,700');
+@import './fonts/fonts.css';
+
+:root {
+    --border-radius: 0.75em;
+    --box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.25);
+}
+
+*, *:before, *:after {
+    box-sizing: border-box;
+    font-family: 'Lora', serif;
+}
+
+body {
+    background: #4c627c;
+}
+
+@import './modules/heads-up.css';
+@import './components/drag-drop/drag-drop.css';
+@import './components/login/login.css';
