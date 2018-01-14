@@ -1,3 +1,4 @@
+const dotenv = require('dotenv').config()
 const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
@@ -50,6 +51,7 @@ module.exports = {
             template: 'src/components/drag-drop/drag-drop.html'
         }),
         new HtmlWebpackPlugin({
+            client: process.env.CLIENTID,
             filename: 'login/index.html',
             template: 'src/components/login/login.html'
         }),

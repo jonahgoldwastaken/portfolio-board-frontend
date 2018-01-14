@@ -15,6 +15,6 @@ body {
     background: #4c627c;
 }
 
-@import './modules/heads-up.css';
+@import './modules/HeadsUp/HeadsUp.css';
 @import './components/drag-drop/drag-drop.css';
 @import './components/login/login.css';

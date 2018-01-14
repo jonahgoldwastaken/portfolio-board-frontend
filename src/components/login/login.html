@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Log in</title>
-    <meta name="google-signin-client_id" content="568563860221-j7cu5vmdbg88miqq65aahq0ahfp7ct1p.apps.googleusercontent.com">
-    <meta name="google-signin-cookiepolicy" content="single_host_origin">
-    <meta name="google-signin-scope" content="profile email">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <% if (htmlWebpackPlugin.options.client) { %>
+        <meta name="google-signin-client_id" content="<%= htmlWebpackPlugin.options.client %>.apps.googleusercontent.com">
+        <meta name="google-signin-cookiepolicy" content="single_host_origin">
+        <meta name="google-signin-scope" content="profile email">
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <% } %>
 </head>
 <body id="login">
     <section>
