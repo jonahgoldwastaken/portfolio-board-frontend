@@ -16,11 +16,32 @@
 }
 
 #drag-drop header h1 {
-    font-family: 'Bebas Neue';
-    font-size: 7vh;
+    font-family: 'Lora', serif;
+    font-size: 5vh;
     margin-bottom: 0;
     margin-top: 1.5vh;
     color: white;
+}
+
+#drag-drop main {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    grid-row: 2 / span 1;
+}
+
+#drag-drop h2 {
+    margin-top: 0;
+    color: var(--text-colour);
+    font-family: 'Lora', serif;
+    font-size: 2.75vh;
+    margin-bottom: 1rem;
+    grid-row: 1 / span 1;
+}
+
+#drag-drop li {
+    list-style-type: none;
 }
 
 #drag-drop header button {
@@ -36,52 +57,40 @@
     font-size: 1.2rem;
     padding: 0.2em 0.8em;
     font-weight: bold;
-    color: white;
+    color: var(--accent-colour);
     cursor: pointer;
-}
-
-#drag-drop main {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: 100%;
-    grid-row: 2 / span 1;
-}
-
-#drag-drop h2 {
-    margin-top: 0;
-    color: white;
-    font-size: 2.75vh;
-    margin-bottom: 1rem;
-}
-
-#drag-drop li {
-    list-style-type: none;
 }
 
 #drag-drop>main>section {
     max-height: 90vh;
-    background: #3b3e41;
+    background: var(--section-colour);
     border-radius: 0.3rem;
     padding: 1rem 1rem;
+    display: grid;
+    grid-template-columns: 24rem, 1.5rem;
+    grid-template-rows: calc(2.75vh + 1rem), 1fr;
+    grid-column-gap: 1rem;
 }
 
 #drag-drop>main>section>ul {
     padding: 0;
-    max-height: calc(87vh - 1rem - 1rem);
+    max-height: calc(84vh - 1rem - 1rem);
     overflow: hidden;
-    overflow-y: scroll;
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    border-radius: 0.3rem;
     margin: 0;
 }
 
 #drag-drop>main>section>ul>li {
     font-size: 1.3rem;
-    background: #ffffff;
+    background: var(--item-colour);
     padding: 1em;
     width: 24rem;
     min-height: 12rem;
     -moz-user-select: none;
     user-select: none;
+    cursor: -webkit-grab;
     cursor: grab;
     border-radius: 0.3rem;
 }
@@ -94,12 +103,17 @@
     padding: 0;
 }
 
+#drag-drop>main>section>ul>li>h3 {
+    color: var(--text-colour);
+}
+
 #drag-drop>main>section>ul>li>h3 + h4 {
     margin-top: -0.8em;
 }
 
 #drag-drop>main>section>ul>li>h4 {
     margin: 0;
+    color: var(--text-colour);
 }
 
 #drag-drop>main>section>ul>li>h4 + p {
@@ -108,11 +122,12 @@
 
 #drag-drop>main>section>ul>li>p {
     margin-bottom: 0;
+    color: var(--text-colour)
 }
 
 #drag-drop>main>section>ul>li>ul>li>a {
     text-decoration: none;
-    color: black;
+    color: var(--text-colour);
     transition: all 0.2s ease-in-out;
 }
 
@@ -124,13 +139,32 @@
     margin-bottom: 0.6em    
 }
 
+#drag-drop>main>section>div {
+    position: relative;
+    max-height: calc(84vh - 1rem - 1rem);
+    width: 1.25rem;
+    border-radius: 0.75rem;
+    grid-column: 2 / span 1;
+    grid-row: 2 / span 1;
+    background: var(--empty-colour);
+}
+
+#drag-drop>main>section>div>div {
+    position: absolute;
+    width: 1.25rem;
+    border-radius: 0.75rem;
+    background: var(--hover-colour);
+    top: var(--sb-top);
+    height: var(--sb-height, 100%)
+}
+
 #drag-drop .isDragging>ul {
     padding: 0;
 }
 
 #drag-drop .isDragging>ul>li>a {
     text-decoration: none;
-    color: black;
+    color: var(--text-colour);
     transition: all 0.2s ease-in-out;
 }
 
@@ -139,18 +173,20 @@
 }
 
 #drag-drop>main>section>ul>li:hover {
-    background: #db7e70;
+    background: var(--hover-colour);
 }
 
 #drag-drop li.isDragging {
     position: fixed !important;
     top: var(--drag-top);
     left: var(--drag-left);
+    cursor: -webkit-grabbing;
     cursor: grabbing;
     width: 24rem;
     min-height: 12rem;
     padding: 1em;
-    background: white;
+    box-shadow: var(--box-shadow);
+    background: var(--item-colour);
     border-radius: 0.3rem;
     user-select: none;
     font-size: 1.3rem;
@@ -174,12 +210,17 @@
     margin: 0;
 }
 
+#drag-drop .isDragging>h3 {
+    color: var(--text-colour);
+}
+
 #drag-drop .isDragging>h3+h4 {
     margin-top: -0.8em;
 }
 
 #drag-drop .isDragging>h4 {
     margin: 0;
+    color: var(--text-colour);
 }
 
 #drag-drop .isDragging>h4+p {
@@ -188,10 +229,11 @@
 
 #drag-drop .isDragging>p {
     margin-bottom: 0;
+    color: var(--text-colour);
 }
 
 #drag-drop li.empty {
-    background: darkgrey;
+    background: var(--empty-colour);
     width: var(--placeholder-width);
     height: var(--placeholder-height);
 }

@@ -115,7 +115,7 @@ export default class DragDrop extends Socket {
         if (this.listContainer.children.length)
             this.listContainer.innerHTML = ''
             
-        this.itemContent.forEach((list, i) => {
+        this.itemContent.forEach((list) => {
             const newSection = document.createElement('section')
             this.listContainer.appendChild(newSection)
 
@@ -126,7 +126,7 @@ export default class DragDrop extends Socket {
             const newList = document.createElement('ul')
             this.lists = newList
 
-            list['listItems'].forEach((itemContent, j) => {
+            list['listItems'].forEach(itemContent => {
                 const newItem = document.createElement('li')
         
                 newItem.innerHTML = `
@@ -152,18 +152,62 @@ export default class DragDrop extends Socket {
 
                 newList.appendChild(newItem)
                 this.listItems = newItem
-            })
 
+            })
+            
             newSection.appendChild(newList)
+            this.constructScrollBar(newList)
         })
 
-        for (let item of this.listItems)
-            item.addEventListener('mousedown', (e) => this.dragStart(e), { bubbles: false })
+        this.addListListeners(this.lists)
+        this.addItemListeners(this.listItems)
+    }
+
+
+    /**
+     * 
+     * @param {HTMLElement} list 
+     */
+    constructScrollBar(list)
+    {
+        const scrollBarContainer = document.createElement('div')
+        const scrollbar = document.createElement('div')
+
+        const sbHeight = (list.offsetHeight / list.scrollHeight) * 100
+        const sbTop = (list.scrollTop / list.scrollHeight) * 100
+
+        scrollbar.style.setProperty('--sb-height', sbHeight + '%')
+        scrollbar.style.setProperty('--sb-top', sbTop + '%')
+
+        scrollBarContainer.appendChild(scrollbar)
+        list.insertAdjacentElement('afterend', scrollBarContainer)
+    }
+
+    /**
+     * Add event listeners to list items for dragStart method
+     * @param {HTMLElement[]} items All HTML list item elements in the listContainer
+     */
+    addItemListeners(items)
+    {
+        items.forEach(item => {
+            item.addEventListener('mousedown', e => this.dragStart(e), { bubbles: false })
+        })
+    }
+
+    /**
+     * Add event listeners to lists for scrollList method
+     * @param {HTMLElement[]} lists All HTML lists in the listContainer
+     */
+    addListListeners(lists)
+    {
+        lists.forEach(list => {
+            list.addEventListener('wheel', e => this.scrollList(e), { bubbles: false })
+        })
     }
 
     /**
      * 
-     * @param {Object[]} positions 
+     * @param {number[]} positions 
      */
     onMoveItem(positions)
     {
@@ -179,8 +223,23 @@ export default class DragDrop extends Socket {
     }
 
     /**
-     * 
-     * @param {MouseEvent} e 
+     * Emit list item move
+     */
+    sendMoveItem()
+    {
+        if (this.currentStartPos != this.currentEndPos) {
+            this.socket.emit('moveItem', [
+                this.currentStartPos,
+                this.currentEndPos
+            ])
+        }
+    }
+
+    
+
+    /**
+     * Initialize dragging functionality onto clicked listitem
+     * @param {MouseEvent} e The mousedown event, including the list item as currentTarget
      */
     dragStart(e)
     {
@@ -226,6 +285,33 @@ export default class DragDrop extends Socket {
         }
     }
 
+    /**
+     * Scroll list functionality (mitigates native scrollbars)
+     * @param {WheelEvent} e The 'wheel' event, including the list as currentTarget
+     */
+    scrollList(e)
+    {
+        const list = e.currentTarget
+        list.scrollTop += e.deltaY
+        this.updateScrollBar(list)
+    }
+
+    /**
+     * Update scrollbar offset
+     * @param {HTMLElement} list 
+     */
+    updateScrollBar(list)
+    {
+        const scrollbarContainer = list.nextElementSibling
+        const scrollbar = scrollbarContainer.children[0]
+        const sbHeight = (list.offsetHeight / list.scrollHeight) * 100
+        const sbTop = (list.scrollTop / list.scrollHeight) * 100
+
+        scrollbar.style.setProperty('--sb-height', sbHeight + '%')
+        scrollbar.style.setProperty('--sb-top', sbTop + '%')
+        console.log(scrollbar)
+    }
+
     scrollHoverList()
     {
         requestAnimationFrame(function () {
@@ -243,11 +329,16 @@ export default class DragDrop extends Socket {
                     else if (this.currentDragDimensions.topCenter >= listDimensions.bottom - 300) {
                         list.scrollTop += ((this.mousePos[1] - (listDimensions.bottom - 300)) / 10)
                     }
+                    this.updateScrollBar(list)
                 }
             }
         }
     }
 
+    /**
+     * Checks where to place the 'empty' list item and places it there
+     * @todo Refactor placement of method and creation of list item pairs to different methods
+     */
     checkPlacholderPosition()
     {
         requestAnimationFrame(function () {
@@ -269,7 +360,7 @@ export default class DragDrop extends Socket {
                     // Make pairs of all elements, and check per pair if the mouse is inbetween the pair
                     let pairs = []
                     const listChildren = Array.from(list.children)
-                    listChildren.forEach((item, i) => item.nextElementSibling !== undefined ? pairs.push([
+                    listChildren.forEach(item => item.nextElementSibling !== undefined ? pairs.push([
                         item,
                         item.nextElementSibling
                     ]) : pairs.push([item]))
@@ -320,13 +411,7 @@ export default class DragDrop extends Socket {
         this.placeholder.parentNode.removeChild(this.placeholder)
 
         this.currentEndPos = this.currentDrag
-        if (this.currentStartPos != this.currentEndPos) {
-            this.socket.emit('moveItem', [
-                this.currentStartPos,
-                this.currentEndPos
-            ])
-        }
-
+        this.sendMoveItem()
         this.currentDrag = null
     }
 }

@@ -34,6 +34,13 @@ module.exports = {
                                 ]
                             ]
                         }
+                    },
+                    {
+                        loader: 'eslint-loader',
+                        options: {
+                            fix: true,
+                            failOnError: true
+                        }
                     }
                 ]
             },
@@ -42,6 +49,13 @@ module.exports = {
                 use: ExtractTextPlugin.extract({
                     use: 'css-loader'
                 })
+            },
+            {
+                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                loader: 'file-loader',
+                options: {
+                    path: '/fonts/[name].[ext]'
+                }
             }
         ]
     },

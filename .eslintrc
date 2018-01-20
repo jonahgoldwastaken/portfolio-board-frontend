@@ -1,5 +1,11 @@
 {
     "extends": "eslint:recommended",
+    "globals": {
+        "Notification": true,
+        "document": true,
+        "window": true,
+        "requestAnimationFrame": true
+    },
     "parserOptions": {
         "ecmaVersion": 2017,
         "sourceType": "module",
@@ -10,6 +16,7 @@
         "es6": true
     },
     "rules": {
+        "no-console": "warn",
         "quotes": [
             "error",
             "single"
@@ -23,12 +30,6 @@
         "semi": [
             "error",
             "never"
-        ],
-        "max-len": [
-            "warn",
-            {
-                "code": 80
-            }
         ],
         "comma-dangle": [
             "error",
