@@ -51,10 +51,10 @@ module.exports = {
                 })
             },
             {
-                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/,
                 loader: 'file-loader',
                 options: {
-                    path: '/fonts/[name].[ext]'
+                    path: '/assets/[name].[ext]'
                 }
             }
         ]

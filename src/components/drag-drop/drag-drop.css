@@ -1,236 +1,271 @@
 #drag-drop {
-    height: 100vh;
-    overflow: hidden;
-    margin: 0;
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 12vh 1fr;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 8.5rem 1fr;
 }
 
-#drag-drop>header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    grid-row: 1 / span 1;
-    padding: 0 2rem;
+#drag-drop > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  grid-row: 1 / span 1;
+  padding: 0 2rem;
 }
 
-#drag-drop>header h1 {
-    font-family: 'Lora', serif;
-    font-size: 5vh;
-    margin: 0;
-    color: white;
+#drag-drop > header h1 {
+  font-family: "Lora", serif;
+  font-size: 3.5rem;
+  margin: 0;
+  color: white;
 }
 
-#drag-drop>header button {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background: white;
-    border: none;
-    border-radius: 1.25em;
-    font-size: 1.2rem;
-    padding: 0.2em 0.8em;
-    font-weight: bold;
-    color: var(--accent-colour);
-    cursor: pointer;
-    margin-left: 0.8rem;
+#drag-drop > header button {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: white;
+  border: none;
+  border-radius: 1.25em;
+  font-size: 1.2rem;
+  padding: 0.2em 0.8em;
+  font-weight: bold;
+  color: var(--accent-colour);
+  cursor: pointer;
+  margin-left: 0.8rem;
 }
 
 #drag-drop main {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: 100%;
-    grid-row: 2 / span 1;
+  display: flex;
+  justify-content: flex-start;
+  padding: 0 4rem;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+  grid-row: 2 / span 1;
+  height: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
 #drag-drop h2 {
-    margin-top: 0;
-    color: var(--text-colour);
-    font-family: 'Lora', serif;
-    font-size: 2.75vh;
-    margin-bottom: 1rem;
-    grid-row: 1 / span 1;
+  margin-top: 0;
+  color: var(--text-colour);
+  font-family: "Lora", serif;
+  font-size: 2.75vh;
+  margin-bottom: 1rem;
+  grid-row: 1 / span 1;
 }
 
 #drag-drop li {
-    list-style-type: none;
+  list-style-type: none;
 }
 
-#drag-drop>main>section {
-    max-height: 88vh;
-    background: var(--section-colour);
-    border-radius: 0.3rem;
-    padding: 1rem 1rem;
-    display: grid;
-    grid-template-columns: 24rem, 1.5rem;
-    grid-template-rows: calc(2.75vh + 1rem), 1fr;
-    grid-column-gap: 1rem;
+#drag-drop > main > section {
+  max-height: calc(100vh - 8.5rem - 1rem - 1rem);
+  background: var(--section-colour);
+  border-radius: 0.3rem;
+  padding: 1rem 1rem;
+  display: grid;
+  grid-template-columns: 24rem, 1.5rem;
+  grid-template-rows: 2.375rem, 1fr;
+  grid-column-gap: 1rem;
 }
 
-#drag-drop>main>section>ul {
-    padding: 0;
-    max-height: calc(82vh - 1rem - 1rem);
-    overflow: hidden;
-    grid-column: 1 / span 1;
-    grid-row: 2 / span 1;
-    border-radius: 0.3rem;
-    margin: 0;
+#drag-drop > main > section:last-of-type {
+  margin-right: 4rem;
 }
 
-#drag-drop>main>section>ul>li {
-    font-size: 1.3rem;
-    background: var(--item-colour);
-    padding: 1em;
+#drag-drop > main > section > ul {
+  padding: 0;
+  max-height: calc(100vh - 8.5rem - 5rem - 2.375rem);
+  width: 24rem;
+  overflow: hidden;
+  grid-column: 1 / span 1;
+  grid-row: 2 / span 1;
+  border-radius: 0.3rem;
+  margin: 0;
+}
+
+#drag-drop > main > section > ul > li {
+  font-size: 1.3rem;
+  background: var(--item-colour);
+  padding: 1em;
+  width: 24rem;
+  flex: 0 0 auto;
+  -moz-user-select: none;
+  user-select: none;
+  cursor: -webkit-grab;
+  cursor: grab;
+  border-radius: 0.3rem;
+}
+
+#drag-drop > main > section > ul > li:not(:last-of-type) {
+  margin-bottom: 1rem;
+}
+
+#drag-drop > main > section > ul > li > ul {
+  padding: 0;
+}
+
+#drag-drop > main > section > ul > li > h3 {
+  color: var(--text-colour);
+}
+
+#drag-drop > main > section > ul > li > h3 + h4 {
+  margin-top: -0.8em;
+}
+
+#drag-drop > main > section > ul > li > h4 {
+  margin: 0;
+  color: var(--text-colour);
+}
+
+#drag-drop > main > section > ul > li > h4 + p {
+  margin-top: 0.4em;
+}
+
+#drag-drop > main > section > ul > li > p {
+  margin-bottom: 0;
+  color: var(--text-colour);
+}
+
+#drag-drop > main > section > ul > li > ul > li > a {
+  text-decoration: none;
+  color: var(--text-colour);
+  transition: all 0.2s ease-in-out;
+}
+
+#drag-drop > main > section > ul > li > ul > li > a:hover {
+  text-decoration: underline;
+}
+
+#drag-drop > main > section > ul > li > ul > li:not(:last-of-type) {
+  margin-bottom: 0.6em;
+}
+
+#drag-drop > main > section > ul > li > img {
     width: 24rem;
-    min-height: 12rem;
-    -moz-user-select: none;
-    user-select: none;
-    cursor: -webkit-grab;
-    cursor: grab;
-    border-radius: 0.3rem;
-}
-
-#drag-drop>main>section>ul>li:not(:last-of-type) {
-    margin-bottom: 1rem;
-}
-
-#drag-drop>main>section>ul>li>ul {
-    padding: 0;
-}
-
-#drag-drop>main>section>ul>li>h3 {
-    color: var(--text-colour);
-}
-
-#drag-drop>main>section>ul>li>h3 + h4 {
-    margin-top: -0.8em;
-}
-
-#drag-drop>main>section>ul>li>h4 {
+    display: block;
     margin: 0;
-    color: var(--text-colour);
-}
-
-#drag-drop>main>section>ul>li>h4 + p {
-    margin-top: 0.4em;
-}
-
-#drag-drop>main>section>ul>li>p {
-    margin-bottom: 0;
-    color: var(--text-colour)
-}
-
-#drag-drop>main>section>ul>li>ul>li>a {
-    text-decoration: none;
-    color: var(--text-colour);
-    transition: all 0.2s ease-in-out;
-}
-
-#drag-drop>main>section>ul>li>ul>li>a:hover {
-    text-decoration: underline;
-}
-
-#drag-drop>main>section>ul>li>ul>li:not(:last-of-type) {
-    margin-bottom: 0.6em    
-}
-
-#drag-drop>main>section>div {
-    position: relative;
-    max-height: calc(84vh - 1rem - 1rem);
-    width: 1.25rem;
-    border-radius: 0.75rem;
-    grid-column: 2 / span 1;
-    grid-row: 2 / span 1;
-    background: var(--empty-colour);
-}
-
-#drag-drop>main>section>div>div {
-    position: absolute;
-    width: 1.25rem;
-    border-radius: 0.75rem;
-    background: var(--hover-colour);
-    top: var(--sb-top);
-    height: var(--sb-height, 100%)
-}
-
-#drag-drop .isDragging>ul {
     padding: 0;
+    margin-left: -1em;
+    margin-top: -1em;
+    margin-bottom: -1em;
+    border-radius: 0.3em;
 }
 
-#drag-drop .isDragging>ul>li>a {
-    text-decoration: none;
-    color: var(--text-colour);
-    transition: all 0.2s ease-in-out;
+#drag-drop > main > section > div {
+  position: relative;
+  max-height: calc(84vh - 1rem - 1rem);
+  width: 1.25rem;
+  border-radius: 0.75rem;
+  grid-column: 2 / span 1;
+  grid-row: 2 / span 1;
+  background: var(--empty-colour);
 }
 
-#drag-drop .isDragging>ul>li:not(:last-of-type) {
-    margin-bottom: 0.6em    
+#drag-drop > main > section > div > div {
+  position: absolute;
+  width: 1.25rem;
+  border-radius: 0.75rem;
+  background: var(--hover-colour);
+  top: var(--sb-top);
+  height: var(--sb-height, 100%);
 }
 
-#drag-drop>main>section>ul>li:hover {
-    background: var(--hover-colour);
+#drag-drop .isDragging > ul {
+  padding: 0;
+}
+
+#drag-drop .isDragging > ul > li > a {
+  text-decoration: none;
+  color: var(--text-colour);
+  transition: all 0.2s ease-in-out;
+}
+
+#drag-drop .isDragging > ul > li:not(:last-of-type) {
+  margin-bottom: 0.6em;
+}
+
+#drag-drop > main > section > ul > li:hover {
+  background: var(--hover-colour);
+}
+
+#drag-drop > main > section > ul > li:hover img {
+  opacity: 0.7;
 }
 
 #drag-drop li.isDragging {
-    position: fixed !important;
-    top: var(--drag-top);
-    left: var(--drag-left);
-    cursor: -webkit-grabbing;
-    cursor: grabbing;
-    width: 24rem;
-    min-height: 12rem;
-    padding: 1em;
-    box-shadow: var(--box-shadow);
-    background: var(--item-colour);
-    border-radius: 0.3rem;
-    user-select: none;
-    font-size: 1.3rem;
+  position: fixed !important;
+  top: var(--drag-top);
+  left: var(--drag-left);
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+  width: 24rem;
+  padding: 1em;
+  box-shadow: var(--box-shadow);
+  background: var(--item-colour);
+  border-radius: 0.3rem;
+  user-select: none;
+  font-size: 1.3rem;
 }
 
 #drag-drop li.isDragging * {
-    user-select: none;
+  user-select: none;
 }
 
 #drag-drop h3 {
-    margin: 0;
-    margin-bottom: 1rem;
+  margin: 0;
+  margin-bottom: 1rem;
 }
 
-#drag-drop .isDragging>ul {
-    padding: 0;
-    margin: 0;
+#drag-drop .isDragging > ul {
+  padding: 0;
+  margin: 0;
 }
 
-#drag-drop .isDragging>h3 {
-    color: var(--text-colour);
+#drag-drop .isDragging > h3 {
+  color: var(--text-colour);
 }
 
-#drag-drop .isDragging>h3+h4 {
-    margin-top: -0.8em;
+#drag-drop .isDragging > h3 + h4 {
+  margin-top: -0.8em;
 }
 
-#drag-drop .isDragging>h4 {
-    margin: 0;
-    color: var(--text-colour);
+#drag-drop .isDragging > h4 {
+  margin: 0;
+  color: var(--text-colour);
 }
 
-#drag-drop .isDragging>h4+p {
-    margin-top: 0.4em;
+#drag-drop .isDragging > h4 + p {
+  margin-top: 0.4em;
 }
 
-#drag-drop .isDragging>p {
-    margin-bottom: 0;
-    color: var(--text-colour);
+#drag-drop .isDragging > p {
+  margin-bottom: 0;
+  color: var(--text-colour);
+}
+
+#drag-drop .isDragging>img {
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 24rem;
+  margin-left: -1em;
+  margin-top: -1em;
+  margin-bottom: -1em;
+  border-radius: 0.3em;
 }
 
 #drag-drop li.empty {
-    background: var(--empty-colour);
-    width: var(--placeholder-width);
-    height: var(--placeholder-height);
+  background: var(--empty-colour);
+  width: var(--placeholder-width);
+  height: var(--placeholder-height);
 }
 
-#drag-drop>main>section:not(:last-of-type) {
-    margin-right: 4em;
+#drag-drop > main > section:not(:last-of-type) {
+  margin-right: 4em;
 }
