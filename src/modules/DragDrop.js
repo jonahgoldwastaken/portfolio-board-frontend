@@ -96,7 +96,7 @@ export default class DragDrop extends Socket {
         this.updateCurrentDragPosition = this.updateCurrentDragPosition.bind(this)
         this.dragStop = this.dragStop.bind(this)
 
-        document.addEventListener('mousemove', (e) => {
+        document.addEventListener('mousemove', e => {
             this.mousePos = e
         })
 
@@ -115,7 +115,7 @@ export default class DragDrop extends Socket {
         if (this.listContainer.children.length)
             this.listContainer.innerHTML = ''
             
-        this.itemContent.forEach((list) => {
+        this.itemContent.forEach(list => {
             const newSection = document.createElement('section')
             this.listContainer.appendChild(newSection)
 
@@ -173,8 +173,8 @@ export default class DragDrop extends Socket {
         const scrollBarContainer = document.createElement('div')
         const scrollbar = document.createElement('div')
 
-        const sbHeight = (list.offsetHeight / list.scrollHeight) * 100
-        const sbTop = (list.scrollTop / list.scrollHeight) * 100
+        const sbHeight = list.offsetHeight / list.scrollHeight * 100
+        const sbTop = list.scrollTop / list.scrollHeight * 100
 
         scrollbar.style.setProperty('--sb-height', sbHeight + '%')
         scrollbar.style.setProperty('--sb-top', sbTop + '%')
@@ -276,12 +276,12 @@ export default class DragDrop extends Socket {
         }.bind(this))
         
         if (this.currentDrag) {
-            this.currentDrag.style.setProperty('--drag-top', (this.mousePos[1] - (this.currentDragOffset[1]) + 'px'))
-            this.currentDrag.style.setProperty('--drag-left', (this.mousePos[0] - (this.currentDragOffset[0]) + 'px'))
+            this.currentDrag.style.setProperty('--drag-top', this.mousePos[1] - this.currentDragOffset[1] + 'px')
+            this.currentDrag.style.setProperty('--drag-left', this.mousePos[0] - this.currentDragOffset[0] + 'px')
     
             this.currentDragDimensions = this.currentDrag.getBoundingClientRect()
-            this.currentDragDimensions.topCenter = this.currentDragDimensions.top + (this.currentDragDimensions.height / 2)
-            this.currentDragDimensions.leftCenter = this.currentDragDimensions.left + (this.currentDragDimensions.width / 2)
+            this.currentDragDimensions.topCenter = this.currentDragDimensions.top + this.currentDragDimensions.height / 2
+            this.currentDragDimensions.leftCenter = this.currentDragDimensions.left + this.currentDragDimensions.width / 2
         }
     }
 
@@ -304,12 +304,11 @@ export default class DragDrop extends Socket {
     {
         const scrollbarContainer = list.nextElementSibling
         const scrollbar = scrollbarContainer.children[0]
-        const sbHeight = (list.offsetHeight / list.scrollHeight) * 100
-        const sbTop = (list.scrollTop / list.scrollHeight) * 100
+        const sbHeight = list.offsetHeight / list.scrollHeight * 100
+        const sbTop = list.scrollTop / list.scrollHeight * 100
 
         scrollbar.style.setProperty('--sb-height', sbHeight + '%')
         scrollbar.style.setProperty('--sb-top', sbTop + '%')
-        console.log(scrollbar)
     }
 
     scrollHoverList()
@@ -324,10 +323,10 @@ export default class DragDrop extends Socket {
     
                 if (listDimensions.left < this.currentDragDimensions.leftCenter && listDimensions.right > this.currentDragDimensions.leftCenter) {
                     if (this.currentDragDimensions.topCenter <= listDimensions.top + 300) {
-                        list.scrollTop -= (((listDimensions.top + 300) - this.mousePos[1]) / 10)
+                        list.scrollTop -= (listDimensions.top + 300 - this.mousePos[1]) / 10
                     }
                     else if (this.currentDragDimensions.topCenter >= listDimensions.bottom - 300) {
-                        list.scrollTop += ((this.mousePos[1] - (listDimensions.bottom - 300)) / 10)
+                        list.scrollTop += (this.mousePos[1] - (listDimensions.bottom - 300)) / 10
                     }
                     this.updateScrollBar(list)
                 }
@@ -373,8 +372,8 @@ export default class DragDrop extends Socket {
                             ]
                         
                             const offset = [
-                                pairDimensions[0].top + (pairDimensions[0].height / 2),
-                                pairDimensions[1].top + (pairDimensions[1].height / 2) 
+                                pairDimensions[0].top + pairDimensions[0].height / 2,
+                                pairDimensions[1].top + pairDimensions[1].height / 2 
                             ]
 
                             if (offset[0] < this.currentDragDimensions.topCenter && offset[1] > this.currentDragDimensions.topCenter) {
@@ -386,8 +385,8 @@ export default class DragDrop extends Socket {
                     // If mouse is not between one of pairs, check first or last child if mouse is above or below it
                     const firstChild = list.children[0]
                     const lastChild = list.children[list.children.length -1]
-                    const firstChildOffset = firstChild.getBoundingClientRect().top + (firstChild.getBoundingClientRect().height / 2)
-                    const lastChildOffset = lastChild.getBoundingClientRect().top + (lastChild.getBoundingClientRect().height / 2)
+                    const firstChildOffset = firstChild.getBoundingClientRect().top + firstChild.getBoundingClientRect().height / 2
+                    const lastChildOffset = lastChild.getBoundingClientRect().top + lastChild.getBoundingClientRect().height / 2
 
                     if (firstChildOffset > this.currentDragDimensions.topCenter) {
                         firstChild.insertAdjacentElement('beforebegin', this.placeholder)

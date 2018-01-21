@@ -4,23 +4,37 @@
     margin: 0;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 10vh 1fr;
+    grid-template-rows: 12vh 1fr;
 }
 
-#drag-drop header {
+#drag-drop>header {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     grid-row: 1 / span 1;
+    padding: 0 2rem;
 }
 
-#drag-drop header h1 {
+#drag-drop>header h1 {
     font-family: 'Lora', serif;
     font-size: 5vh;
-    margin-bottom: 0;
-    margin-top: 1.5vh;
+    margin: 0;
     color: white;
+}
+
+#drag-drop>header button {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: white;
+    border: none;
+    border-radius: 1.25em;
+    font-size: 1.2rem;
+    padding: 0.2em 0.8em;
+    font-weight: bold;
+    color: var(--accent-colour);
+    cursor: pointer;
+    margin-left: 0.8rem;
 }
 
 #drag-drop main {
@@ -44,25 +58,8 @@
     list-style-type: none;
 }
 
-#drag-drop header button {
-    position: absolute;
-    top: 2rem;
-    right: 2rem;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background: black;
-    border: none;
-    border-radius: 1.25em;
-    font-size: 1.2rem;
-    padding: 0.2em 0.8em;
-    font-weight: bold;
-    color: var(--accent-colour);
-    cursor: pointer;
-}
-
 #drag-drop>main>section {
-    max-height: 90vh;
+    max-height: 88vh;
     background: var(--section-colour);
     border-radius: 0.3rem;
     padding: 1rem 1rem;
@@ -74,7 +71,7 @@
 
 #drag-drop>main>section>ul {
     padding: 0;
-    max-height: calc(84vh - 1rem - 1rem);
+    max-height: calc(82vh - 1rem - 1rem);
     overflow: hidden;
     grid-column: 1 / span 1;
     grid-row: 2 / span 1;
@@ -194,10 +191,6 @@
 
 #drag-drop li.isDragging * {
     user-select: none;
-}
-
-#drag-drop h1 {
-    font-size: 2.8em
 }
 
 #drag-drop h3 {
