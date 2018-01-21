@@ -22,7 +22,7 @@
 
 #modal h1 {
     font-size: 2rem;
-    color: var(--item-colour);
+    color: var(--picker-colour);
     margin: 0;
     line-height: 1em;
 }
@@ -52,6 +52,7 @@
 
 #modal input[type="number"] {
     cursor: text;
+    
 }
 
 #modal form label {
@@ -61,7 +62,7 @@
 
 #modal form input {
     border-radius: var(--border-radius);
-    background: var(--item-colour);
+    background: var(--picker-colour);
     color: var(--text-colour);
     padding: var(--border-radius);
     margin-top: 0.75rem;
@@ -74,11 +75,10 @@
 }
 
 #modal footer input {
-    background: var(--section-colour);
     margin: 0;
 }
 
 #modal input:hover,
 #modal input:focus {
-    background: var(--hover-colour);
+    background: var(--picker-hover-colour);
 }

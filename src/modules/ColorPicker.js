@@ -2,10 +2,11 @@ import Modal from './Modal/Modal'
 
 export default class ColorPicker
 {
+
     set colorHue(hue)
     {
         this._colorHue = hue
-        document.documentElement.style.setProperty('--color-hue', this._colorHue)
+        document.documentElement.style.setProperty('--colour-hue', this._colorHue)
     }
         
     constructor()
@@ -62,9 +63,18 @@ export default class ColorPicker
                 </footer>
             </form>
         `, 'Kleurenkiezer')
+
         const form = this._chooseModal._modal.querySelector('form')
+        const colorInput = this._chooseModal._modal.querySelector('input[type="number"]')
+
+        colorInput.addEventListener('input', () => {
+            this._temporaryHue = colorInput.value
+            document.documentElement.style.setProperty('--temporary-hue', this._temporaryHue)
+        })
+
         form.addEventListener('submit', e => {
             e.preventDefault()
+            this._temporaryHue = form.querySelector('input[type="number"]').value
             this.colorHue = form.querySelector('input[type="number"]').value
             this._chooseModal.destroyModal()
         })
