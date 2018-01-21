@@ -174,7 +174,6 @@ export default class DragDrop extends Socket {
     
             scrollBarContainer.appendChild(scrollbar)
             list.insertAdjacentElement('afterend', scrollBarContainer)
-            console.log('hoi')
         })
         this.resizeScrollBars()
         this.addScrollBarListeners()
@@ -307,7 +306,6 @@ export default class DragDrop extends Socket {
         const sbHeight = list.offsetHeight / list.scrollHeight * 100
         const sbTop = list.scrollTop / list.scrollHeight * 100
 
-        console.log(scrollbar)
         scrollbar.style.setProperty('--sb-height', sbHeight + '%')
         scrollbar.style.setProperty('--sb-top', sbTop + '%')
     }
