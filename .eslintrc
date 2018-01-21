@@ -27,6 +27,14 @@
         ],
         "no-var": "warn",
         "block-scoped-var": "error",
+        "no-extra-parens": [
+            "error",
+            "all"
+        ],
+        "arrow-parens": [
+            "error",
+            "as-needed"
+        ],
         "semi": [
             "error",
             "never"
