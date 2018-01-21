@@ -156,31 +156,28 @@ export default class DragDrop extends Socket {
             })
             
             newSection.appendChild(newList)
-            this.constructScrollBar(newList)
         })
-
+        this.constructScrollBar(this.lists)
         this.addListListeners(this.lists)
         this.addItemListeners(this.listItems)
     }
 
-
     /**
      * 
-     * @param {HTMLElement} list 
+     * @param {HTMLElement[]} items All HTML list item elements in the listContainer
      */
-    constructScrollBar(list)
+    constructScrollBar(lists)
     {
-        const scrollBarContainer = document.createElement('div')
-        const scrollbar = document.createElement('div')
-
-        const sbHeight = list.offsetHeight / list.scrollHeight * 100
-        const sbTop = list.scrollTop / list.scrollHeight * 100
-
-        scrollbar.style.setProperty('--sb-height', sbHeight + '%')
-        scrollbar.style.setProperty('--sb-top', sbTop + '%')
-
-        scrollBarContainer.appendChild(scrollbar)
-        list.insertAdjacentElement('afterend', scrollBarContainer)
+        lists.forEach(list => {
+            const scrollBarContainer = document.createElement('div')
+            const scrollbar = document.createElement('div')
+    
+            scrollBarContainer.appendChild(scrollbar)
+            list.insertAdjacentElement('afterend', scrollBarContainer)
+            console.log('hoi')
+        })
+        this.resizeScrollBars()
+        this.addScrollBarListeners()
     }
 
     /**
@@ -203,6 +200,11 @@ export default class DragDrop extends Socket {
         lists.forEach(list => {
             list.addEventListener('wheel', e => this.scrollList(e), { bubbles: false })
         })
+    }
+
+    addScrollBarListeners()
+    {
+        window.addEventListener('resize', () => this.resizeScrollBars())
     }
 
     /**
@@ -234,8 +236,6 @@ export default class DragDrop extends Socket {
             ])
         }
     }
-
-    
 
     /**
      * Initialize dragging functionality onto clicked listitem
@@ -307,6 +307,7 @@ export default class DragDrop extends Socket {
         const sbHeight = list.offsetHeight / list.scrollHeight * 100
         const sbTop = list.scrollTop / list.scrollHeight * 100
 
+        console.log(scrollbar)
         scrollbar.style.setProperty('--sb-height', sbHeight + '%')
         scrollbar.style.setProperty('--sb-top', sbTop + '%')
     }
@@ -332,6 +333,18 @@ export default class DragDrop extends Socket {
                 }
             }
         }
+    }
+
+    resizeScrollBars()
+    {
+        this.lists.forEach(list => {
+            const scrollbar = list.parentNode.querySelector('div>div')
+            const sbHeight = list.offsetHeight / list.scrollHeight * 100
+            const sbTop = list.scrollTop / list.scrollHeight * 100
+
+            scrollbar.style.setProperty('--sb-height', sbHeight + '%')
+            scrollbar.style.setProperty('--sb-top', sbTop + '%')
+        })
     }
 
     /**
