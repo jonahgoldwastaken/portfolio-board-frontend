@@ -6,14 +6,16 @@ export default class ColorPicker
     set colorHue(hue)
     {
         this._colorHue = hue
-        document.documentElement.style.setProperty('--colour-hue', this._colorHue)
+        this.updateStyleEL()
     }
         
     constructor()
     {
+        this.styleEL = document.createElement('style')
         this.createRandomiseButton()
         this.createChangeButton()
         this.randomiseHue()
+        document.head.appendChild(this.styleEL)
     }
 
     createRandomiseButton()
@@ -69,7 +71,7 @@ export default class ColorPicker
 
         colorInput.addEventListener('input', () => {
             this._temporaryHue = colorInput.value
-            document.documentElement.style.setProperty('--temporary-hue', this._temporaryHue)
+            this.updateStyleEL()
         })
 
         form.addEventListener('submit', e => {
@@ -78,5 +80,15 @@ export default class ColorPicker
             this.colorHue = form.querySelector('input[type="number"]').value
             this._chooseModal.destroyModal()
         })
+    }
+
+    updateStyleEL()
+    {
+        this.styleEL.innerHTML = `
+            :root {
+                --temporary-hue: ${this._temporaryHue || this._colorHue};
+                --colour-hue: ${this._colorHue};
+            }
+        `
     }
 }
