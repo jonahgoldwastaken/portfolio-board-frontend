@@ -290,12 +290,12 @@ export default class DragDrop extends Socket {
             topOffset
         ]
 
-        this.currentDrag.classList.add('isDragging')
-
         this.updateCurrentDragPosition()
 
         this.placeholder = document.createElement('li')
         this.currentDrag.insertAdjacentElement('beforebegin', this.placeholder)
+
+        this.currentDrag.classList.add('isDragging')
 
         document.body.appendChild(this.currentDrag)
 
