@@ -60,14 +60,10 @@ export default class DragDrop extends Socket {
 
     set placeholder(el) {
         el.classList.add('empty')
-        el.style.setProperty(
-            '--placeholder-width',
-            this.currentDragDimensions.width + 'px'
-        )
-        el.style.setProperty(
-            '--placeholder-height',
+        this._placeholderDimensions = [
+            this.currentDragDimensions.width + 'px',
             this.currentDragDimensions.height + 'px'
-        )
+        ]
         this._placeholder = el
     }
 
@@ -87,12 +83,16 @@ export default class DragDrop extends Socket {
             this.listContainer = container
             this.constructLists()
         })
+
         this.socket.on('moveItem', positions => this.onMoveItem(positions))
 
         this.updateCurrentDragPosition = this.updateCurrentDragPosition.bind(
             this
         )
         this.dragStop = this.dragStop.bind(this)
+
+        this.styleEl = document.createElement('style')
+        document.head.appendChild(this.styleEl)
 
         document.addEventListener('mousemove', e => {
             this.mousePos = e
@@ -111,8 +111,11 @@ export default class DragDrop extends Socket {
      * Create UL Element and inject into DOM
      */
     constructLists() {
-        if (this.listContainer.children.length)
+        if (this.listContainer.children.length) {
             this.listContainer.innerHTML = ''
+            this._lists = null
+            this._listItems = null
+        }
 
         this.itemContent.forEach(list => {
             const newSection = document.createElement('section')
@@ -151,7 +154,7 @@ export default class DragDrop extends Socket {
                                 </li>
                             `).join('')}
                         </ul>
-                    ` : '' }
+                    ` : ''}
                 `
 
                 newList.appendChild(newItem)
@@ -159,14 +162,16 @@ export default class DragDrop extends Socket {
             })
 
             newSection.appendChild(newList)
+            this.constructScrollBar(newList)
         })
-        this.constructScrollBar(this.lists)
+
+        this.resizeScrollBars()
+        this.addScrollBarListeners()
         this.addListListeners(this.lists)
         this.addItemListeners(this.listItems)
     }
 
-    organiseListItems(list)
-    {
+    organiseListItems(list) {
         switch (list.flow) {
         default: {
             return list
@@ -176,7 +181,9 @@ export default class DragDrop extends Socket {
             return list
         }
         case 'sort': {
-            list.listItems.sort((a, b) => b.title.toUpperCase() < a.title.toUpperCase())
+            list.listItems.sort(
+                (a, b) => b.title.toUpperCase() < a.title.toUpperCase()
+            )
             return list
         }
         }
@@ -184,18 +191,14 @@ export default class DragDrop extends Socket {
 
     /**
      *
-     * @param {HTMLElement[]} items All HTML list item elements in the listContainer
+     * @param {HTMLElement[]} list All HTML list item elements in the listContainer
      */
-    constructScrollBar(lists) {
-        lists.forEach(list => {
-            const scrollBarContainer = document.createElement('div')
-            const scrollbar = document.createElement('div')
+    constructScrollBar(list) {
+        const scrollBarContainer = document.createElement('div')
+        const scrollbar = document.createElement('div')
 
-            scrollBarContainer.appendChild(scrollbar)
-            list.insertAdjacentElement('afterend', scrollBarContainer)
-        })
-        this.resizeScrollBars()
-        this.addScrollBarListeners()
+        scrollBarContainer.appendChild(scrollbar)
+        list.insertAdjacentElement('afterend', scrollBarContainer)
     }
 
     /**
@@ -248,6 +251,9 @@ export default class DragDrop extends Socket {
                 'beforebegin',
                 elementToMove
             )
+
+        this.resizeScrollBars()
+        this.updateStyleEl()
     }
 
     /**
@@ -272,6 +278,8 @@ export default class DragDrop extends Socket {
 
         this.currentDrag = e.currentTarget
 
+        this.currentStartPos = this.currentDrag
+
         const leftOffset =
             this.mousePos[0] - this.currentDrag.getBoundingClientRect().left
         const topOffset =
@@ -281,8 +289,6 @@ export default class DragDrop extends Socket {
             leftOffset,
             topOffset
         ]
-
-        this.currentStartPos = this.currentDrag
 
         this.currentDrag.classList.add('isDragging')
 
@@ -306,22 +312,22 @@ export default class DragDrop extends Socket {
         )
 
         if (this.currentDrag) {
-            this.currentDrag.style.setProperty(
-                '--drag-top',
-                this.mousePos[1] - this.currentDragOffset[1] + 'px'
-            )
-            this.currentDrag.style.setProperty(
-                '--drag-left',
+            this.currentDragPosition = [
+                this.mousePos[1] - this.currentDragOffset[1] + 'px',
                 this.mousePos[0] - this.currentDragOffset[0] + 'px'
-            )
+            ]
 
             this.currentDragDimensions = this.currentDrag.getBoundingClientRect()
+
             this.currentDragDimensions.topCenter =
                 this.currentDragDimensions.top +
                 this.currentDragDimensions.height / 2
+
             this.currentDragDimensions.leftCenter =
                 this.currentDragDimensions.left +
                 this.currentDragDimensions.width / 2
+
+            this.updateStyleEl()
         }
     }
 
@@ -340,15 +346,21 @@ export default class DragDrop extends Socket {
      * @param {HTMLElement} list
      */
     updateScrollBar(list) {
-        const scrollbarContainer = list.nextElementSibling
-        const scrollbar = scrollbarContainer.children[0]
+        const listIndex = this.lists.indexOf(list)
         const sbHeight = list.offsetHeight / list.scrollHeight * 100
         const sbTop = list.scrollTop / list.scrollHeight * 100
 
-        scrollbar.style.setProperty('--sb-height', sbHeight + '%')
-        scrollbar.style.setProperty('--sb-top', sbTop + '%')
+        this.scrollbarDimensions[listIndex] = [
+            sbTop,
+            sbHeight
+        ]
+
+        this.updateStyleEl()
     }
 
+    /**
+     * Scroll the list if currentdrag hovers over it
+     */
     scrollHoverList() {
         requestAnimationFrame(
             function() {
@@ -385,15 +397,21 @@ export default class DragDrop extends Socket {
         }
     }
 
+    /**
+     * Resize scrollbars to match new list dimensions
+     */
     resizeScrollBars() {
-        this.lists.forEach(list => {
-            const scrollbar = list.parentNode.querySelector('div>div')
-            const sbHeight = list.offsetHeight / list.scrollHeight * 100
+        this.scrollbarDimensions = []
+        this.lists.forEach((list, i) => {
             const sbTop = list.scrollTop / list.scrollHeight * 100
+            const sbHeight = list.offsetHeight / list.scrollHeight * 100
 
-            scrollbar.style.setProperty('--sb-height', sbHeight + '%')
-            scrollbar.style.setProperty('--sb-top', sbTop + '%')
+            this.scrollbarDimensions[i] = [
+                sbTop,
+                sbHeight
+            ]
         })
+        this.updateStyleEl()
     }
 
     /**
@@ -411,11 +429,8 @@ export default class DragDrop extends Socket {
             for (let list of this.lists) {
                 const listDimensions = list.getBoundingClientRect()
 
-                if (
-                    listDimensions.left <
-                        this.currentDragDimensions.leftCenter &&
-                    listDimensions.right > this.currentDragDimensions.leftCenter
-                ) {
+                if (listDimensions.left < this.currentDragDimensions.leftCenter &&
+                    listDimensions.right > this.currentDragDimensions.leftCenter) {
                     // If no children, just put placeholder inside the list
                     if (!list.children.length) {
                         list.appendChild(this.placeholder)
@@ -423,75 +438,66 @@ export default class DragDrop extends Socket {
                     }
 
                     // Make pairs of all elements, and check per pair if the mouse is inbetween the pair
-                    let pairs = []
-                    const listChildren = Array.from(list.children)
-                    listChildren.forEach(
-                        item =>
-                            item.nextElementSibling !== undefined
-                                ? pairs.push([
-                                    item,
-                                    item.nextElementSibling
-                                ])
-                                : pairs.push([item])
-                    )
-
-                    pairs.forEach(pair => {
-                        if (pair[1]) {
-                            const pairDimensions = [
-                                pair[0].getBoundingClientRect(),
-                                pair[1].getBoundingClientRect()
-                            ]
-
-                            const offset = [
-                                pairDimensions[0].top +
-                                    pairDimensions[0].height / 2,
-                                pairDimensions[1].top +
-                                    pairDimensions[1].height / 2
-                            ]
-
-                            if (
-                                offset[0] <
-                                    this.currentDragDimensions.topCenter &&
-                                offset[1] > this.currentDragDimensions.topCenter
-                            ) {
-                                pair[0].insertAdjacentElement(
-                                    'afterend',
-                                    this.placeholder
-                                )
-                            }
-                        }
-                    })
+                    let pairs = this.createCollisionPairs(Array.from(list.children))
+                    this.checkCollisionPairs(pairs)
 
                     // If mouse is not between one of pairs, check first or last child if mouse is above or below it
                     const firstChild = list.children[0]
                     const lastChild = list.children[list.children.length - 1]
+
                     const firstChildOffset =
                         firstChild.getBoundingClientRect().top +
                         firstChild.getBoundingClientRect().height / 2
+
                     const lastChildOffset =
                         lastChild.getBoundingClientRect().top +
                         lastChild.getBoundingClientRect().height / 2
 
-                    if (
-                        firstChildOffset > this.currentDragDimensions.topCenter
-                    ) {
-                        firstChild.insertAdjacentElement(
-                            'beforebegin',
-                            this.placeholder
-                        )
+                    if (firstChildOffset > this.currentDragDimensions.topCenter) {
+                        firstChild.insertAdjacentElement('beforebegin', this.placeholder)
                         break
-                    } else if (
-                        lastChildOffset < this.currentDragDimensions.topCenter
-                    ) {
-                        lastChild.insertAdjacentElement(
-                            'afterend',
-                            this.placeholder
-                        )
+                    } else if (lastChildOffset < this.currentDragDimensions.topCenter) {
+                        lastChild.insertAdjacentElement('afterend', this.placeholder)
                         break
                     }
                 }
             }
         }
+    }
+
+    checkCollisionPairs(pairs) {
+        pairs.forEach(pair => {
+            if (pair[1]) {
+                const pairDimensions = [
+                    pair[0].getBoundingClientRect(),
+                    pair[1].getBoundingClientRect()
+                ]
+                const offset = [
+                    pairDimensions[0].top +
+                    pairDimensions[0].height / 2,
+                    pairDimensions[1].top +
+                    pairDimensions[1].height / 2
+                ]
+                if (offset[0] <this.currentDragDimensions.topCenter &&
+                    offset[1] > this.currentDragDimensions.topCenter) {
+                    pair[0].insertAdjacentElement('afterend', this.placeholder)
+                }
+            }
+        })
+    }
+
+    createCollisionPairs(items) {
+        const pairs = []
+        items.forEach(
+            item =>
+                item.nextElementSibling !== undefined
+                    ? pairs.push([
+                        item,
+                        item.nextElementSibling
+                    ])
+                    : pairs.push([item])
+        )
+        return pairs
     }
 
     dragStop() {
@@ -507,5 +513,28 @@ export default class DragDrop extends Socket {
         this.currentEndPos = this.currentDrag
         this.sendMoveItem()
         this.currentDrag = null
+    }
+
+    updateStyleEl() {
+        this.styleEl.innerHTML = `
+            ${this.currentDrag? `
+                .isDragging {
+                    --drag-top: ${this.currentDragPosition[0]};
+                    --drag-left: ${this.currentDragPosition[1]};
+                }
+            ` : ''}
+            ${this.lists.map((list, i) => `
+                #drag-drop main section:nth-child(${i + 1})>div>div {
+                    --sb-top: ${this.scrollbarDimensions[i][0]}%;
+                    --sb-height: ${this.scrollbarDimensions[i][1]}%;
+                }
+            `).join('')}
+            ${this._placeholderDimensions ? `
+                li.empty {
+                    --placeholder-width: ${this._placeholderDimensions[0]};
+                    --placeholder-height: ${this._placeholderDimensions[1]};
+                }
+            `: ''}
+        `
     }
 }
