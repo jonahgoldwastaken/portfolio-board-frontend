@@ -26,7 +26,7 @@ export default class Socket
             })
         })
         this.socket.on('error', () => {
-            new HeadsUp('serverMessage', 'There is something wrong with your connection, please try reloading the page')
+            new HeadsUp('serverMessage', 'Er is iets fout gegaan in de verbinding met de server, probeer de pagina te herladen.')
         })
     }
 

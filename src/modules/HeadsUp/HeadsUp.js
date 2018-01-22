@@ -58,7 +58,7 @@ export default class HeadsUp
     {
         switch (this.type) {
         case 'serverMessage': {
-            new Notification('Message from server', { body: this.message, icon: 'https://via.placeholder.com/800x800' })
+            new Notification('Bericht van server', { body: this.message, icon: 'https://via.placeholder.com/800x800' })
             break
         }
         case 'chatMessage': {
@@ -90,6 +90,6 @@ export default class HeadsUp
         notificationTextContainer.appendChild(notificationTitle)
         notificationTextContainer.appendChild(notificationContent)
         document.body.appendChild(notification)
-        notification.addEventListener('animationend', () => document.body.removeChild(notification), false)
+        notification.addEventListener('animationend', () => notification.remove(), false)
     }
 }
