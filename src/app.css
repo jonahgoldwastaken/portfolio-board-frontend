@@ -3,7 +3,7 @@
 
 :root {
     --border-radius: 0.75em;
-    --box-shadow: 0 0.5rem 0.5rem -.2rem rgba(0, 0, 0, 0.45);
+    --box-shadow: 0 0.8rem 1rem -.2rem hsl(var(--colour-hue), 49%, 19%);
     --colour-hue: 158;
     --bg-colour: hsl(var(--colour-hue), 49%, 24%);
     --section-colour: hsl(var(--colour-hue), 49%, 39%);
