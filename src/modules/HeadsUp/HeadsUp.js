@@ -57,13 +57,13 @@ export default class HeadsUp
     sendNotification()
     {
         switch (this.type) {
-        case 'serverMessage': {
-            new Notification('Bericht van server', { body: this.message, icon: 'https://via.placeholder.com/800x800' })
-            break
-        }
-        case 'chatMessage': {
-            new Notification(this.message.sender, { body: this.message.content })
-        }
+            case 'serverMessage': {
+                new Notification('Bericht van server', { body: this.message, icon: 'https://via.placeholder.com/800x800' })
+                break
+            }
+            case 'chatMessage': {
+                new Notification(this.message.sender, { body: this.message.content })
+            }
         }
     }
 
@@ -76,12 +76,12 @@ export default class HeadsUp
         const notificationImage = document.createElement('img')
 
         switch (this.type) {
-        case 'serverMessage': {
-            notificationTitle.innerHTML = 'Message from server'
-            notificationContent.innerHTML = this.message
-            notificationImage.src = 'https://via.placeholder.com/800x800'
-            break
-        }
+            case 'serverMessage': {
+                notificationTitle.innerHTML = 'Message from server'
+                notificationContent.innerHTML = this.message
+                notificationImage.src = 'https://via.placeholder.com/800x800'
+                break
+            }
         }
         
         notification.classList.add('pop-up')

@@ -18,6 +18,7 @@
 #drag-drop > header h1 {
   font-family: "Lora", serif;
   font-size: 3.5rem;
+  line-height: 1;
   margin: 0;
   color: white;
 }
@@ -154,7 +155,7 @@
     margin-left: -1em;
     margin-top: -1em;
     margin-bottom: -1em;
-    border-radius: 0.3em;
+    border-radius: 0.3rem;
 }
 
 #drag-drop > main > section > div {
@@ -249,7 +250,7 @@
   color: var(--text-colour);
 }
 
-#drag-drop .isDragging>img {
+#drag-drop .isDragging > img {
   display: block;
   margin: 0;
   padding: 0;
@@ -257,7 +258,7 @@
   margin-left: -1em;
   margin-top: -1em;
   margin-bottom: -1em;
-  border-radius: 0.3em;
+  border-radius: 0.3rem;
 }
 
 #drag-drop li.empty {
