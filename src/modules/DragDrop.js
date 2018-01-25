@@ -327,7 +327,6 @@ export default class DragDrop extends Socket {
 
     /**
     * Checks where to place the 'empty' list item and places it there
-    * @todo Refactor placement of method and creation of list item pairs to different methods
     */
     checkCurrentDragCollision() {
         requestAnimationFrame(function() {
