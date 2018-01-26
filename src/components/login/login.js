@@ -29,6 +29,8 @@ window.onSignIn = onSignIn
 window.signOut = signOut
 
 window.addEventListener('load', () => {
-    const signoutButton = document.querySelector('#signout')
-    signoutButton.addEventListener('click', signOut)
+    if (document.body.id === 'login') {
+        const signoutButton = document.querySelector('#signout')
+        signoutButton.addEventListener('click', signOut)
+    }
 })
