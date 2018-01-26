@@ -4,7 +4,9 @@
         "Notification": true,
         "document": true,
         "window": true,
-        "requestAnimationFrame": true
+        "requestAnimationFrame": true,
+        "XMLHttpRequest": true,
+        "gapi": true
     },
     "parserOptions": {
         "ecmaVersion": 2017,
