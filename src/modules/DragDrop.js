@@ -85,6 +85,7 @@ export default class DragDrop extends Socket {
             this.updateScrollBars()
             this.addScrollBarListeners()
             this.addMousePosListeners()
+            this.addContainerScrollListener()
         })
 
         this.socket.on('moveItem', positions => this.onMoveItem(positions))
@@ -200,6 +201,14 @@ export default class DragDrop extends Socket {
 
     addScrollBarListeners() {
         window.addEventListener('resize', () => this.updateScrollBars())
+    }
+
+    addContainerScrollListener() {
+        this.listContainer.addEventListener('mousewheel', e => {
+            if (e.target === this.listContainer) {
+                this.listContainer.scrollLeft += e.deltaY
+            }
+        })
     }
 
     addMousePosListeners() {
