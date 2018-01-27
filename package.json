@@ -7,7 +7,7 @@
     "dev": "webpack -d --hide-modules --progress",
     "prod": "webpack -p --hide-modules --progress",
     "watch": "webpack-dev-server --progress --colors --https",
-    "lint": "eslint --fix src/**/*.js"
+    "lint": "eslint --fix ./src"
   },
   "author": "Jonah Meijers",
   "license": "ISC",
