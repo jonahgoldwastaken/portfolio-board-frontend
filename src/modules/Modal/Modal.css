@@ -17,7 +17,7 @@
     background: white;
     border-radius: var(--border-radius);
     overflow: hidden;
-    padding: calc(var(--border-radius) * 2);
+    padding: calc(var(--padding) * 1.5)
 }
 
 #modal h1 {
@@ -31,7 +31,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    padding-bottom: calc(var(--border-radius) * 2);
+    padding-bottom: var(--padding);
 }
 
 #modal header button, #modal input {
@@ -64,14 +64,14 @@
     border-radius: var(--border-radius);
     background: var(--picker-colour);
     color: var(--text-colour);
-    padding: var(--border-radius);
+    padding: var(--button-padding-large);
     margin-top: 0.75rem;
     display: block;
     width: 100%;
 }
 
 #modal footer {
-    padding-top: calc(var(--border-radius) * 2);
+    padding-top: calc(var(--padding) * 1.5);
 }
 
 #modal footer input {

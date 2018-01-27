@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Lora:400,400i,700|Lato:400,700');
 
 :root {
-    --border-radius: 0.75em;
+    --border-radius: 0.3rem;
+    --padding: 1rem;
+    --button-padding: 0.2rem 0.8rem;
+    --button-padding-large: 1rem 1.2rem;
     --box-shadow: 0 0.8rem 1rem -.2rem hsl(var(--colour-hue), 49%, 19%);
     --colour-hue: 158;
     --bg-colour: hsl(var(--colour-hue), 49%, 15%);
@@ -22,7 +25,51 @@
 }
 
 body {
+    height: 100vh;
+    margin: 0;
     background: var(--bg-colour);
+    display: grid;
+    grid-template-rows: 8.5rem 1fr;
+}
+
+body > header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    grid-row: 1 / span 1;
+    padding: 0 calc(var(--padding) * 2);
+}
+
+body > header h1 {
+    font-family: "Lora", serif;
+    font-size: 3.5rem;
+    line-height: 1;
+    margin: 0;
+    color: white;
+}
+
+h2 {
+    margin-top: 0;
+    color: var(--text-colour);
+    font-family: "Lora", serif;
+    font-size: 2.75vh;
+    margin-bottom: 1rem;
+    grid-row: 1 / span 1;
+}
+
+button {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: white;
+    border: none;
+    border-radius: 1.25em;
+    font-size: 1.2rem;
+    padding: var(--button-padding);
+    font-weight: bold;
+    color: var(--accent-colour);
+    cursor: pointer;
+    margin-left: 0.8rem;
 }
 
 @import './components/drag-drop/drag-drop.css';
