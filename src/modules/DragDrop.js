@@ -2,10 +2,10 @@ import Socket from './Socket'
 
 export default class DragDrop extends Socket {
     set currentStartPos(item) {
-        const listChildren = Array.from(item.parentNode.children)
-        const listList = Array.from(item.parentNode.parentNode.parentNode.children)
-        const itemIndex = listChildren.indexOf(item)
-        const listIndex = listList.indexOf(item.parentNode.parentNode)
+        const listChildren = Array.from(item.parentNode.children),
+            listList = Array.from(item.parentNode.parentNode.parentNode.children),
+            itemIndex = listChildren.indexOf(item),
+            listIndex = listList.indexOf(item.parentNode.parentNode)
         this._currentStartPos = { listIndex: listIndex, itemIndex: itemIndex }
     }
 
@@ -14,10 +14,10 @@ export default class DragDrop extends Socket {
     }
 
     set currentEndPos(item) {
-        const listChildren = Array.from(item.parentNode.children)
-        const listList = Array.from(item.parentNode.parentNode.parentNode.children)
-        const itemIndex = listChildren.indexOf(item)
-        const listIndex = listList.indexOf(item.parentNode.parentNode)
+        const listChildren = Array.from(item.parentNode.children),
+            listList = Array.from(item.parentNode.parentNode.parentNode.children),
+            itemIndex = listChildren.indexOf(item),
+            listIndex = listList.indexOf(item.parentNode.parentNode)
         this._currentEndPos = { listIndex: listIndex, itemIndex: itemIndex }
     }
 
@@ -71,14 +71,14 @@ export default class DragDrop extends Socket {
     * @param {HTMLElement} container
     */
     constructor(container) {
-        super('/drag-drop')
+        super()
 
         this.styleEl = document.createElement('style')
         document.head.appendChild(this.styleEl)
 
         this.dragStop = this.dragStop.bind(this)
 
-        this.socket.on('initLists', itemContent => {
+        this.socket.on('initApp', itemContent => {
             this.itemContent = itemContent
             this.listContainer = container
             this.constructLists()
@@ -107,9 +107,9 @@ export default class DragDrop extends Socket {
         }
 
         this.itemContent.forEach(list => {
-            const newSection = document.createElement('section')
-            const newList = document.createElement('ul')
-            const newHeading = document.createElement('h2')
+            const newSection = document.createElement('section'),
+                newList = document.createElement('ul'),
+                newHeading = document.createElement('h2')
 
             newHeading.innerHTML = list.heading
             newSection.appendChild(newHeading)
@@ -172,8 +172,8 @@ export default class DragDrop extends Socket {
     * @param {HTMLElement[]} list All HTML list item elements in the listContainer
     */
     constructScrollBar(list) {
-        const scrollBarContainer = document.createElement('div')
-        const scrollbar = document.createElement('div')
+        const scrollBarContainer = document.createElement('div'),
+            scrollbar = document.createElement('div')
 
         scrollBarContainer.appendChild(scrollbar)
         list.insertAdjacentElement('afterend', scrollBarContainer)
@@ -220,10 +220,10 @@ export default class DragDrop extends Socket {
     * @param {number[]} positions
     */
     onMoveItem(positions) {
-        const startPos = positions[0]
-        const endPos = positions[1]
-        const elementToMove = this.listContainer.children[startPos.listIndex].children[1].children[startPos.itemIndex]
-        const putList = this.listContainer.children[endPos.listIndex].children[1]
+        const startPos = positions[0],
+            endPos = positions[1],
+            elementToMove = this.listContainer.children[startPos.listIndex].children[1].children[startPos.itemIndex],
+            putList = this.listContainer.children[endPos.listIndex].children[1]
 
         if (endPos.itemIndex >= putList.children.length)
             putList.children[endPos.itemIndex - 1].insertAdjacentElement('afterend', elementToMove)
@@ -256,8 +256,8 @@ export default class DragDrop extends Socket {
         this.currentDrag = e.currentTarget
         this.currentStartPos = this.currentDrag
 
-        const leftOffset = this.mousePos[0] - this.currentDrag.getBoundingClientRect().left
-        const topOffset = this.mousePos[1] - this.currentDrag.getBoundingClientRect().top
+        const leftOffset = this.mousePos[0] - this.currentDrag.getBoundingClientRect().left,
+            topOffset = this.mousePos[1] - this.currentDrag.getBoundingClientRect().top
 
         this.currentDragOffset = [
             leftOffset,
@@ -323,8 +323,8 @@ export default class DragDrop extends Socket {
     updateScrollBars() {
         this.scrollbarDimensions = []
         this.lists.forEach((list, i) => {
-            const sbTop = list.scrollTop / list.scrollHeight * 100
-            const sbHeight = list.offsetHeight / list.scrollHeight * 100
+            const sbTop = list.scrollTop / list.scrollHeight * 100,
+                sbHeight = list.offsetHeight / list.scrollHeight * 100
 
             this.scrollbarDimensions[i] = [
                 sbTop,
@@ -361,10 +361,10 @@ export default class DragDrop extends Socket {
             return
         }
 
-        const firstChild = list.children[0]
-        const lastChild = list.children[list.children.length - 1]
-        const firstChildOffset = firstChild.getBoundingClientRect().top + firstChild.getBoundingClientRect().height / 2
-        const lastChildOffset = lastChild.getBoundingClientRect().top + lastChild.getBoundingClientRect().height / 2
+        const firstChild = list.children[0],
+            lastChild = list.children[list.children.length - 1],
+            firstChildOffset = firstChild.getBoundingClientRect().top + firstChild.getBoundingClientRect().height / 2,
+            lastChildOffset = lastChild.getBoundingClientRect().top + lastChild.getBoundingClientRect().height / 2
 
         if (firstChildOffset > this.currentDragDimensions.topCenter) {
             firstChild.insertAdjacentElement('beforebegin', this.placeholder)

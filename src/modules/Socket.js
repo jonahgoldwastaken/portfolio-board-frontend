@@ -51,11 +51,9 @@ export default class Socket
 
             params = amperSandTest[Symbol.split](params)
 
-            for (let param of params) {
-                if (amperSandTest.test(param)) {
+            for (let param of params)
+                if (amperSandTest.test(param))
                     params.splice(params.indexOf(param), 1)
-                }
-            }
 
             for (let param of params) {
                 param = equalsTest[Symbol.split](param)
@@ -66,9 +64,8 @@ export default class Socket
 
             params = paramsObject
             return params
-        } else {
+        } else
             return null
-        }
     }
 
 }
