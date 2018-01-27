@@ -4,14 +4,14 @@
     --border-radius: 0.75em;
     --box-shadow: 0 0.8rem 1rem -.2rem hsl(var(--colour-hue), 49%, 19%);
     --colour-hue: 158;
-    --bg-colour: hsl(var(--colour-hue), 49%, 24%);
-    --section-colour: hsl(var(--colour-hue), 49%, 39%);
-    --item-colour: hsl(var(--colour-hue), 49%, 49%);
-    --hover-colour: hsl(var(--colour-hue), 49%, 59%);
-    --empty-colour: hsl(var(--colour-hue), 49%, 29%);
-    --accent-colour: hsl(var(--colour-hue), 49%, 19%);
-    --picker-colour: hsl(var(--temporary-hue, var(--colour-hue)), 49%, 49%);
-    --picker-hover-colour: hsl(var(--temporary-hue, var(--colour-hue)), 49%, 59%);
+    --bg-colour: hsl(var(--colour-hue), 49%, 15%);
+    --section-colour: hsl(var(--colour-hue), 49%, 40%);
+    --item-colour: hsl(var(--colour-hue), 49%, 50%);
+    --hover-colour: hsl(var(--colour-hue), 49%, 60%);
+    --empty-colour: hsl(var(--colour-hue), 49%, 30%);
+    --accent-colour: hsl(var(--colour-hue), 49%, 20%);
+    --picker-colour: hsl(var(--temporary-hue, var(--colour-hue)), 49%, 50%);
+    --picker-hover-colour: hsl(var(--temporary-hue, var(--colour-hue)), 49%, 60%);
     --text-colour: #ffffff;
     --secondary-text: #fcfcfc;
 }
