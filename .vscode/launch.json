@@ -4,7 +4,7 @@
         {
             "type": "firefox",
             "request": "launch",
-            "name": "Launch Firefox",
+            "name": "in Firefox",
             "url": "https://localhost:8080",
             "webRoot": "${workspaceFolder}",
             "sourceMaps": "client"
@@ -12,7 +12,7 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Launch Chrome",
+            "name": "in Chrome",
             "url": "https://localhost:8080",
             "webRoot": "${workspaceFolder}",
             "sourceMaps": true,
