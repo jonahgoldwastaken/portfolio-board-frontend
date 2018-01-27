@@ -15,11 +15,10 @@ export default class Socket
 
     /**
      * 
-     * @param {string} nsp 
      */
-    constructor(nsp)
+    constructor()
     {
-        this.socket = io(`https://localhost:3000${nsp ? nsp : ''}`)
+        this.socket = io('https://localhost:3000')
         this.socket.on('connect', () => {
             this.socket.on('serverMessage', msg => {
                 new HeadsUp('serverMessage', msg)
