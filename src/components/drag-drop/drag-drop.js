@@ -1,7 +1,8 @@
 import DragDrop from '../../modules/DragDrop'
 import ColorPicker from '../../modules/ColorPicker'
 
-window.addEventListener('load', () => {
+
+export const dragDropInit = () => {
     if (document.body.id === 'drag-drop') {
         const session = new DragDrop(document.body.children[1])
         new ColorPicker()
@@ -9,4 +10,4 @@ window.addEventListener('load', () => {
             session.socket.emit('reset')
         })
     }
-})
+}

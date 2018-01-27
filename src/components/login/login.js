@@ -3,9 +3,7 @@ const onSignIn = googleUser => {
     const xhr = new XMLHttpRequest()
     xhr.open('POST', 'https://localhost:3000/signin')
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-    xhr.onload = function () {
-        console.log('Signed in as: ' + xhr.responseText)
-    }
+    xhr.onload = function () { }
     xhr.send('idtoken=' + id_token)
 }
 
@@ -16,21 +14,18 @@ const signOut = () => {
         const res = JSON.parse(xhr.response)
         if (res.success) {
             const auth2 = gapi.auth2.getAuthInstance()
-            auth2.signOut().then(function () {
-                console.log('User signed out.')
-            })
-
+            auth2.signOut().then(function () { })
         }
     }
     xhr.send()
 }
 
-window.onSignIn = onSignIn
-window.signOut = signOut
-
-window.addEventListener('load', () => {
+export const loginInit = () => {
     if (document.body.id === 'login') {
+        window.onSignIn = onSignIn
+        window.signOut = signOut
+
         const signoutButton = document.querySelector('#signout')
         signoutButton.addEventListener('click', signOut)
     }
-})
+}
