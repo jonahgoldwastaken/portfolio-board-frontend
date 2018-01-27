@@ -7,6 +7,9 @@
   grid-template-rows: 8.5rem 1fr;
 }
 
+/**************************************************/
+/******************** HEADER **********************/
+/**************************************************/
 #drag-drop > header {
   display: flex;
   align-items: center;
@@ -38,6 +41,9 @@
   margin-left: 0.8rem;
 }
 
+/**************************************************/
+/********************* MAIN ***********************/
+/**************************************************/
 #drag-drop main {
   display: flex;
   justify-content: flex-start;
@@ -64,6 +70,9 @@
   list-style-type: none;
 }
 
+/**************************************************/
+/******************** SECTION *********************/
+/**************************************************/
 #drag-drop > main > section {
   max-height: calc(100vh - 8.5rem - 1rem - 1rem);
   background: var(--section-colour);
@@ -79,83 +88,8 @@
   margin-right: 4rem;
 }
 
-#drag-drop > main > section > ul {
-  padding: 0;
-  max-height: calc(100vh - 8.5rem - 5rem - 2.375rem);
-  width: 24rem;
-  overflow: hidden;
-  grid-column: 1 / span 1;
-  grid-row: 2 / span 1;
-  border-radius: 0.3rem;
-  margin: 0;
-}
-
-#drag-drop > main > section > ul > li {
-  font-size: 1.3rem;
-  background: var(--item-colour);
-  padding: 1em;
-  width: 24rem;
-  flex: 0 0 auto;
-  -moz-user-select: none;
-  user-select: none;
-  cursor: -webkit-grab;
-  cursor: grab;
-  border-radius: 0.3rem;
-}
-
-#drag-drop > main > section > ul > li:not(:last-of-type) {
-  margin-bottom: 1rem;
-}
-
-#drag-drop > main > section > ul > li > ul {
-  padding: 0;
-}
-
-#drag-drop > main > section > ul > li > h3 {
-  color: var(--text-colour);
-}
-
-#drag-drop > main > section > ul > li > h3 + h4 {
-  margin-top: -0.8em;
-}
-
-#drag-drop > main > section > ul > li > h4 {
-  margin: 0;
-  color: var(--text-colour);
-}
-
-#drag-drop > main > section > ul > li > h4 + p {
-  margin-top: 0.4em;
-}
-
-#drag-drop > main > section > ul > li > p {
-  margin-bottom: 0;
-  color: var(--text-colour);
-}
-
-#drag-drop > main > section > ul > li > ul > li > a {
-  text-decoration: none;
-  color: var(--text-colour);
-  transition: all 0.2s ease-in-out;
-}
-
-#drag-drop > main > section > ul > li > ul > li > a:hover {
-  text-decoration: underline;
-}
-
-#drag-drop > main > section > ul > li > ul > li:not(:last-of-type) {
-  margin-bottom: 0.6em;
-}
-
-#drag-drop > main > section > ul > li > img {
-    width: 24rem;
-    display: block;
-    margin: 0;
-    padding: 0;
-    margin-left: -1em;
-    margin-top: -1em;
-    margin-bottom: -1em;
-    border-radius: 0.3rem;
+#drag-drop > main > section:not(:last-of-type) {
+  margin-right: 4em;
 }
 
 #drag-drop > main > section > div {
@@ -177,18 +111,101 @@
   height: var(--sb-height, 100%);
 }
 
+#drag-drop > main > section > ul {
+  padding: 0;
+  max-height: calc(100vh - 8.5rem - 5rem - 2.375rem);
+  width: 24rem;
+  overflow: hidden;
+  grid-column: 1 / span 1;
+  grid-row: 2 / span 1;
+  border-radius: 0.3rem;
+  margin: 0;
+}
+
+/**************************************************/
+/******************** ITEMS ***********************/
+/**************************************************/
+#drag-drop > main > section > ul > li,
+#drag-drop li.isDragging {
+  font-size: 1.3rem;
+  background: var(--item-colour);
+  padding: 1em;
+  width: 24rem;
+  flex: 0 0 auto;
+  -moz-user-select: none;
+  user-select: none;
+  cursor: -webkit-grab;
+  cursor: grab;
+  border-radius: 0.3rem;
+}
+
+#drag-drop > main > section > ul > li:not(:last-of-type),
+#drag-drop .isDragging > ul > li:not(:last-of-type) {
+  margin-bottom: 1rem;
+}
+
+#drag-drop > main > section > ul > li > ul,
 #drag-drop .isDragging > ul {
+  margin: 0;
   padding: 0;
 }
 
+#drag-drop > main > section > ul > li > h3,
+#drag-drop .isDragging > h3 {
+  margin: 0;
+  margin-bottom: 1rem;
+  color: var(--text-colour);
+}
+
+#drag-drop > main > section > ul > li > h3 + h4,
+#drag-drop .isDragging > h3 + h4 {
+  color: var(--text-colour);
+  margin-top: -0.8em;
+}
+
+#drag-drop > main > section > ul > li > h4,
+#drag-drop .isDragging > h4 {
+  margin: 0;
+  color: var(--text-colour);
+}
+
+#drag-drop > main > section > ul > li > h4 + p,
+#drag-drop .isDragging > h4 + p {
+  margin-top: 0.4em;
+}
+
+#drag-drop > main > section > ul > li > p,
+#drag-drop .isDragging > p {
+  margin-bottom: 0;
+  color: var(--text-colour);
+}
+
+#drag-drop > main > section > ul > li > ul > li > a,
 #drag-drop .isDragging > ul > li > a {
   text-decoration: none;
   color: var(--text-colour);
   transition: all 0.2s ease-in-out;
 }
 
+#drag-drop > main > section > ul > li > ul > li > a:hover {
+  text-decoration: underline;
+}
+
+#drag-drop > main > section > ul > li > ul > li:not(:last-of-type),
 #drag-drop .isDragging > ul > li:not(:last-of-type) {
   margin-bottom: 0.6em;
+}
+
+#drag-drop > main > section > ul > li > img,
+#drag-drop .isDragging > img {
+    width: 24rem;
+    display: block;
+    margin: 0;
+    padding: 0;
+    margin-left: -1em;
+    margin-top: -1em;
+    margin-bottom: -1em;
+    border-radius: 0.3rem;
 }
 
 #drag-drop > main > section > ul > li:hover {
@@ -205,68 +222,10 @@
   left: var(--drag-left);
   cursor: -webkit-grabbing;
   cursor: grabbing;
-  width: 24rem;
-  padding: 1em;
-  box-shadow: var(--box-shadow);
-  background: var(--item-colour);
-  border-radius: 0.3rem;
-  user-select: none;
-  font-size: 1.3rem;
-}
-
-#drag-drop li.isDragging * {
-  user-select: none;
-}
-
-#drag-drop h3 {
-  margin: 0;
-  margin-bottom: 1rem;
-}
-
-#drag-drop .isDragging > ul {
-  padding: 0;
-  margin: 0;
-}
-
-#drag-drop .isDragging > h3 {
-  color: var(--text-colour);
-}
-
-#drag-drop .isDragging > h3 + h4 {
-  margin-top: -0.8em;
-}
-
-#drag-drop .isDragging > h4 {
-  margin: 0;
-  color: var(--text-colour);
-}
-
-#drag-drop .isDragging > h4 + p {
-  margin-top: 0.4em;
-}
-
-#drag-drop .isDragging > p {
-  margin-bottom: 0;
-  color: var(--text-colour);
-}
-
-#drag-drop .isDragging > img {
-  display: block;
-  margin: 0;
-  padding: 0;
-  width: 24rem;
-  margin-left: -1em;
-  margin-top: -1em;
-  margin-bottom: -1em;
-  border-radius: 0.3rem;
 }
 
 #drag-drop li.empty {
   background: var(--empty-colour);
   width: var(--placeholder-width);
   height: var(--placeholder-height);
-}
-
-#drag-drop > main > section:not(:last-of-type) {
-  margin-right: 4em;
 }
