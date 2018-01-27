@@ -4,6 +4,8 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+/* eslint-disable */
+
 module.exports = {
     entry: path.resolve(__dirname, 'src/app.js'),
     devtool: 'source-maps',
@@ -21,17 +23,11 @@ module.exports = {
                         loader: 'babel-loader',
                         options: {
                             presets: [
-                                [
-                                    '@babel/preset-env',
-                                    {
-                                        targets: {
-                                            browsers: [
-                                                'last 2 versions',
-                                                'ie >= 11'
-                                            ]
-                                        }
+                                ['@babel/preset-env', {
+                                    targets: {
+                                        browsers: ['last 2 versions', 'ie >= 11']
                                     }
-                                ]
+                                }]
                             ]
                         }
                     },
