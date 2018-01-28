@@ -68,4 +68,22 @@ export default class Socket
             return null
     }
 
+    organiseListItems(list) {
+        switch (list.flow) {
+            default: {
+                return list
+            }
+
+            case 'reverse': {
+                list.listItems.reverse()
+                return list
+            }
+
+            case 'sort': {
+                list.listItems.sort((a, b) => b.title.toUpperCase() < a.title.toUpperCase())
+                return list
+            }
+        }
+    }
+
 }

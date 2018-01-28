@@ -78,14 +78,16 @@ export default class DragDrop extends Socket {
 
         this.dragStop = this.dragStop.bind(this)
 
-        this.socket.on('initApp', itemContent => {
-            this.itemContent = itemContent
+        this.socket.on('initApp', content => {
+            this._itemContent = content
             this.listContainer = container
             this.constructLists()
             this.updateScrollBars()
             this.addScrollBarListeners()
             this.addMousePosListeners()
             this.addContainerScrollListener()
+            this.createResetButton()
+            this.addResetButtonListener()
         })
 
         this.socket.on('moveItem', positions => this.onMoveItem(positions))
@@ -106,7 +108,7 @@ export default class DragDrop extends Socket {
             this._listItems = null
         }
 
-        this.itemContent.forEach(list => {
+        this._itemContent.forEach(list => {
             const newSection = document.createElement('section'),
                 newList = document.createElement('ul'),
                 newHeading = document.createElement('h2')
@@ -149,24 +151,6 @@ export default class DragDrop extends Socket {
         this.addItemListeners(this.listItems)
     }
 
-    organiseListItems(list) {
-        switch (list.flow) {
-            default: {
-                return list
-            }
-
-            case 'reverse': {
-                list.listItems.reverse()
-                return list
-            }
-
-            case 'sort': {
-                list.listItems.sort((a, b) => b.title.toUpperCase() < a.title.toUpperCase())
-                return list
-            }
-        }
-    }
-
     /**
     *
     * @param {HTMLElement[]} list All HTML list item elements in the listContainer
@@ -177,6 +161,12 @@ export default class DragDrop extends Socket {
 
         scrollBarContainer.appendChild(scrollbar)
         list.insertAdjacentElement('afterend', scrollBarContainer)
+    }
+
+    createResetButton() {
+        this._resetButton = document.createElement('button')
+        this._resetButton.innerHTML = 'Reset lijsten'
+        document.querySelector('header div').appendChild(this._resetButton)
     }
 
     /**
@@ -213,6 +203,12 @@ export default class DragDrop extends Socket {
 
     addMousePosListeners() {
         document.addEventListener('mousemove', e => this.mousePos = e)
+    }
+
+    addResetButtonListener() {
+        this._resetButton.addEventListener('click', () => {
+            this.socket.emit('reset')
+        })
     }
 
     /**

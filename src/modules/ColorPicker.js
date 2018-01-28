@@ -27,9 +27,9 @@ export default class ColorPicker
 
     insertRandomiseButton()
     {
-        const resetButton = document.querySelector('header button:last-child')
+        const buttonContainer = document.querySelector('header div')
         
-        resetButton.insertAdjacentElement('beforebegin', this._randomiseButton)
+        buttonContainer.insertAdjacentElement('afterbegin', this._randomiseButton)
         this._randomiseButton.addEventListener('click', () => this.randomiseHue())
     }
 

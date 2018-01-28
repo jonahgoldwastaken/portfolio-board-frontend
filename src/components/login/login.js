@@ -21,11 +21,9 @@ const signOut = () => {
 }
 
 export const loginInit = () => {
-    if (document.body.id === 'login') {
-        window.onSignIn = onSignIn
-        window.signOut = signOut
+    window.onSignIn = onSignIn
+    window.signOut = signOut
 
-        const signoutButton = document.querySelector('#signout')
-        signoutButton.addEventListener('click', signOut)
-    }
+    const signoutButton = document.querySelector('#signout')
+    signoutButton.addEventListener('click', signOut)
 }

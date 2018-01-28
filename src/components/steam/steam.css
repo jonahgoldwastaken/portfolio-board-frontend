@@ -1,0 +1,77 @@
+#steam {
+    overflow: hidden;
+}
+
+/**************************************************/
+/********************* MAIN ***********************/
+/**************************************************/
+#steam main {
+    display: grid;
+    grid-template-columns: 32rem 1fr;
+    grid-template-rows: 3rem 1fr;
+}
+
+/**************************************************/
+/********************* NAV ************************/
+/**************************************************/
+#steam main > nav {
+    grid-row: 1 / span 1;
+    grid-column: 1 / span 2;
+    width: 100%;
+}
+
+#steam main > nav ul {
+    display: flex;
+}
+
+#steam main > nav li {
+    flex: 1 0;
+}
+
+#steam main > nav button {
+    border-radius: 0;
+    margin: 0;
+    height: 3rem;
+    width: 100%;
+    color: var(--section-colour);
+}
+
+#steam main > nav button:hover {
+    background: var(--hover-colour);
+    color: var(--text-colour);
+}
+
+#steam main > nav button:active,
+#steam main>nav button:focus {
+    outline: none;    
+}
+
+#steam main > nav button.active {
+    background: var(--item-colour);
+    color: var(--text-colour);
+}
+
+#steam main > section > ul {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    background: var(--section-colour);
+    height: 100%;
+}
+
+#steam main > section > ul > li label {
+    display: block;
+    width: 100%;
+    background: var(--empty-colour);
+    padding: var(--padding);
+    color: var(--text-colour);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+#steam main > section > ul > li input {
+    display: none;
+}
+
+#steam main > section > ul > li input:checked + label {
+    background: var(--hover-colour);
+}

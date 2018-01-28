@@ -57,6 +57,19 @@ h2 {
     grid-row: 1 / span 1;
 }
 
+h3, h4, p, a {
+    color: var(--text-colour);
+}
+
+ul {
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
 button {
     appearance: none;
     -webkit-appearance: none;
@@ -73,6 +86,7 @@ button {
 }
 
 @import './components/drag-drop/drag-drop.css';
+@import './components/steam/steam.css';
 @import './components/login/login.css';
 @import './modules/HeadsUp/HeadsUp.css';
 @import './modules/Modal/Modal.css';

@@ -58,7 +58,7 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: 'src/components/drag-drop/drag-drop.html'
+            template: './src/app.html'
         }),
         new HtmlWebpackPlugin({
             client: process.env.CLIENTID,

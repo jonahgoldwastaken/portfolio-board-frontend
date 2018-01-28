@@ -19,10 +19,6 @@
   -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
-#drag-drop li {
-  list-style-type: none;
-}
-
 /**************************************************/
 /******************** SECTION *********************/
 /**************************************************/
@@ -65,14 +61,12 @@
 }
 
 #drag-drop > main > section > ul {
-  padding: 0;
   max-height: calc(100vh - 15.875rem);
   width: 24rem;
   overflow: hidden;
   grid-column: 1 / span 1;
   grid-row: 2 / span 1;
   border-radius: var(--border-radius);
-  margin: 0;
 }
 
 /**************************************************/
@@ -97,29 +91,20 @@
   margin-bottom: 1rem;
 }
 
-#drag-drop > main > section > ul > li > ul,
-#drag-drop .isDragging > ul {
-  margin: 0;
-  padding: 0;
-}
-
 #drag-drop > main > section > ul > li > h3,
 #drag-drop .isDragging > h3 {
   margin: 0;
   margin-bottom: 1rem;
-  color: var(--text-colour);
 }
 
 #drag-drop > main > section > ul > li > h3 + h4,
 #drag-drop .isDragging > h3 + h4 {
-  color: var(--text-colour);
   margin-top: -0.8em;
 }
 
 #drag-drop > main > section > ul > li > h4,
 #drag-drop .isDragging > h4 {
   margin: 0;
-  color: var(--text-colour);
 }
 
 #drag-drop > main > section > ul > li > h4 + p,
@@ -130,13 +115,11 @@
 #drag-drop > main > section > ul > li > p,
 #drag-drop .isDragging > p {
   margin-bottom: 0;
-  color: var(--text-colour);
 }
 
 #drag-drop > main > section > ul > li > ul > li > a,
 #drag-drop .isDragging > ul > li > a {
   text-decoration: none;
-  color: var(--text-colour);
   transition: all 0.2s ease-in-out;
 }
 
