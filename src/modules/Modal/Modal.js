@@ -12,6 +12,8 @@ export default class Modal
         
         document.body.insertAdjacentElement('beforeend', this._modalContainer)
 
+        this.destroyModal = this.destroyModal.bind(this)
+
         this.insertModal(html)
         this.createModalHeader(title)
     }
@@ -41,6 +43,7 @@ export default class Modal
     {
         const closeButton = this._modalHeader.querySelector('button')
         closeButton.addEventListener('click', () => this.destroyModal())
+        document.addEventListener('keyup', this.destroyModal)
     }
 
     /**
@@ -54,8 +57,12 @@ export default class Modal
         this._modalContainer.insertAdjacentElement('afterbegin', this._modal)
     }
 
-    destroyModal()
+    destroyModal(e)
     {
-        this._modalContainer.remove()
+        if (e && e.key === 'Escape') {
+            document.removeEventListener('keyup', this.destroyModal)
+            this._modalContainer.remove()
+        } else if (!e)
+            this._modalContainer.remove()
     }
 }
