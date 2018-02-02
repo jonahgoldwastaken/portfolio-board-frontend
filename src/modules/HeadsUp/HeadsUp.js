@@ -33,21 +33,16 @@ export default class HeadsUp
         this.type = type
         this.message = msg
         this.requestNotificationPermission()
-            .then(result => {
-                if (result == 'granted') result = true
-                else result = false
-                this.canSendNotifications = result
-                if (this.canSendNotifications) {
-                    this.sendNotification()
-                } else {
-                    this.createPopUp()
-                }
-            })
+            .then(result => result == 'granted' ? true : false)
+            .then(isEnabled => this.canSendNotifications = isEnabled)
+            .finally(() => this.canSendNotifications ?
+                this.sendNotification() :
+                this.createPopUp())
     }
 
     /**
      * 
-     * @returns boolean
+     * @returns Promise<Notification>
      */
     async requestNotificationPermission()
     {
@@ -77,7 +72,7 @@ export default class HeadsUp
 
         switch (this.type) {
             case 'serverMessage': {
-                notificationTitle.innerHTML = 'Message from server'
+                notificationTitle.innerHTML = 'Bericht van server'
                 notificationContent.innerHTML = this.message
                 notificationImage.src = 'https://via.placeholder.com/800x800'
                 break

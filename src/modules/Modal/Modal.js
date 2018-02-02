@@ -62,7 +62,10 @@ export default class Modal
         if (e && e.key === 'Escape') {
             document.removeEventListener('keyup', this.destroyModal)
             this._modalContainer.remove()
-        } else if (!e)
+            delete this
+        } else if (!e) {
             this._modalContainer.remove()
+            delete this
+        }
     }
 }
