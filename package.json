@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack -d --hide-modules --progress",
     "prod": "webpack -p --hide-modules --progress",
-    "watch": "webpack-dev-server --progress --colors --https",
+    "watch": "webpack-dev-server --progress --colors --https --client-log-level none",
     "lint": "eslint --fix ./src"
   },
   "author": "Jonah Meijers",
@@ -17,16 +17,16 @@
     "socket.io": "^2.0.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.36",
-    "@babel/preset-env": "^7.0.0-beta.36",
+    "@babel/core": "^7.0.0-beta.39",
+    "@babel/preset-env": "^7.0.0-beta.39",
     "babel-loader": "^8.0.0-beta.0",
-    "css-loader": "^0.28.8",
-    "eslint": "^4.14.0",
+    "css-loader": "^0.28.9",
+    "eslint": "^4.16.0",
     "eslint-loader": "^1.9.0",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^1.1.6",
     "html-webpack-plugin": "^2.30.1",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.9.7"
+    "webpack-dev-server": "^2.11.1"
   }
 }
