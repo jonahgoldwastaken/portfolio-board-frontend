@@ -1,6 +1,5 @@
 import Socket from '../Socket'
-import { views } from './view'
-// import { views } from './view'
+import SteamView from './SteamView'
 
 export default class Steam extends Socket {
     /**
@@ -12,9 +11,11 @@ export default class Steam extends Socket {
 
         this.socket.on('initApp', content => {
             content.forEach(list => this.organiseListItems(list))
-            this._itemContent = content
+            this._lists = content
             this._appContainer = appContainer
+            this._selectedList = this._lists[0]
             this.constructNavigation()
+            this.addNavigationListener()
             this.constructView()
         })
     }
@@ -22,18 +23,19 @@ export default class Steam extends Socket {
     constructNavigation() {
         const newNav = document.createElement('nav')
         this._navList = document.createElement('ul')
-
-        this._itemContent.forEach(list => {
+        this._lists.forEach(list => {
             this._navList.innerHTML += `
                 <li>
-                    <button data-target="${list.heading}">${list.heading}</button>
+                    <button ${list.heading === this._selectedList.heading ? 'class="active"' : ''} data-target="${list.heading}">${list.heading}</button>
                 </li>
             `
         })
 
         newNav.appendChild(this._navList)
         this._appContainer.appendChild(newNav)
+    }
 
+    addNavigationListener() {
         for (let item of this._navList.children) {
             item.children[0].addEventListener('click', e => this.switchView(e))
         }
@@ -41,28 +43,25 @@ export default class Steam extends Socket {
 
     constructView() {
         const listSection = document.createElement('section')
-
-        listSection.innerHTML = views['list'](this._itemContent[0])
+        listSection.innerHTML = new SteamView(this._selectedList)._listHTML
         this._appContainer.appendChild(listSection)
-        const items = document.querySelectorAll('[name="item"]')
-
-        for (let item of items) {
-            item.addEventListener('change', e => {
-                const selectedItem = e.currentTarget.value
-                this.getItem(selectedItem)
-            })
-        }
     }
 
     switchView(e) {
         const clickedButton = e.currentTarget
-        for (let item of this._navList.children) {
+        for (let item of this._navList.children)
             item.children[0].classList.remove('active')
-        }
         clickedButton.classList.add('active')
+        this._selectedList = this.getList(clickedButton.dataset.target)
     }
 
-    getItem() {
+    getList(heading) {
+        return this._lists.find(list =>
+            list.heading === heading)
+    }
 
+    getItemContent(uuid) {
+        return this._lists[0].listItems.find(item =>
+            item.title === uuid)
     }
 }
