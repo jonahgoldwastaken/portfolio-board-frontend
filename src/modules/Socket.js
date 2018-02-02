@@ -3,35 +3,30 @@ import HeadsUp from './HeadsUp/HeadsUp'
 
 export default class Socket
 {
-    get socket()
-    {
-        return this._socket
-    }
 
-    set socket(socket)
-    {
-        this._socket = socket
-    }
-
-    /**
-     * 
-     */
     constructor()
     {
-        this.socket = io('https://localhost:3000')
-        this.socket.on('connect', () => {
-            this.socket.on('serverMessage', msg => {
+        this._socket = io('https://localhost:3000')
+        this._socket.on('connect', () => {
+            this._socket.on('serverMessage', msg => {
                 new HeadsUp('serverMessage', msg)
             })
+
+            this._socket.on('initApp', appContent => {
+                appContent.map(list => this.organiseListItems(list))
+                this._appContent = appContent
+            })
+
+            this._socket.on('updateApp', updatedContent => {
+                updatedContent.map(list => this.organiseListItems(list))
+                this._appContent = updatedContent
+            })
         })
-        this.socket.on('error', () => {
+
+
+        this._socket.on('error', () => {
             new HeadsUp('serverMessage', 'Er is iets fout gegaan in de verbinding met de server, probeer de pagina te herladen.')
         })
-    }
-
-    listener()
-    {
-
     }
 
     /**

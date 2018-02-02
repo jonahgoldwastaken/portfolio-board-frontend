@@ -36,15 +36,6 @@ export default class DragDrop extends Socket {
         return this._mousePos
     }
 
-    set listItems(item) {
-        if (!this._listItems) this._listItems = []
-        this._listItems.push(item)
-    }
-
-    get listItems() {
-        return this._listItems
-    }
-
     set lists(list) {
         if (!this._lists) this._lists = []
         this._lists.push(list)
@@ -72,25 +63,37 @@ export default class DragDrop extends Socket {
     */
     constructor(container) {
         super()
-
-        this.styleEl = document.createElement('style')
-        document.head.appendChild(this.styleEl)
+        this._socket.on('connect', () => {
+            this._socket.on('initApp', () => {
+                this.constructLists()
+                this.updateScrollBars()
+                this.addScrollBarListeners()
+                this.addMousePosListeners()
+                this.createResetButton()
+                this.addResetButtonListener()
+            })
+            this._socket.on('resetApp', () => {
+                this.constructLists()
+                this.updateScrollBars()
+                this.addScrollBarListeners()
+                this.addMousePosListeners()
+                this.addContainerScrollListener()
+            })
+            this._socket.on('updateApp', () => {
+                this.constructLists()
+                this.updateScrollBars()
+                this.addScrollBarListeners()
+                this.addMousePosListeners()
+                this.addContainerScrollListener()
+            })
+            this._socket.on('moveItem', positions => this.onMoveItem(positions))
+        })
 
         this.dragStop = this.dragStop.bind(this)
 
-        this.socket.on('initApp', content => {
-            this._itemContent = content
-            this.listContainer = container
-            this.constructLists()
-            this.updateScrollBars()
-            this.addScrollBarListeners()
-            this.addMousePosListeners()
-            this.addContainerScrollListener()
-            this.createResetButton()
-            this.addResetButtonListener()
-        })
-
-        this.socket.on('moveItem', positions => this.onMoveItem(positions))
+        this._listContainer = container
+        this.styleEl = document.createElement('style')
+        document.head.appendChild(this.styleEl)
 
         requestAnimationFrame(function() {
             this.updateCurrentDragPosition()
@@ -102,13 +105,12 @@ export default class DragDrop extends Socket {
     * Create sections, headings and lists and inject into DOM
     */
     constructLists() {
-        if (this.listContainer.children.length) {
-            this.listContainer.innerHTML = ''
+        if (this._listContainer.children.length) {
+            this._listContainer.innerHTML = ''
             this._lists = null
-            this._listItems = null
         }
 
-        this._itemContent.forEach(list => {
+        this._appContent.forEach(list => {
             const newSection = document.createElement('section'),
                 newList = document.createElement('ul'),
                 newHeading = document.createElement('h2')
@@ -117,10 +119,8 @@ export default class DragDrop extends Socket {
             newSection.appendChild(newHeading)
 
             this.lists = newList
-            list = this.organiseListItems(list)
             list.listItems.forEach(itemContent => {
                 const newItem = document.createElement('li')
-                this.listItems = newItem
 
                 newItem.innerHTML = `
                         ${itemContent.title ? `<h3>${itemContent.title}</h3>` : '' }
@@ -140,20 +140,19 @@ export default class DragDrop extends Socket {
 
                 newList.appendChild(newItem)
             })
-
             newSection.appendChild(newList)
-            this.constructScrollBar(newList)
+            this._listContainer.appendChild(newSection)
 
-            this.listContainer.appendChild(newSection)
+            this.constructScrollBar(newList)
+            this.addItemListeners(newList.children)
         })
 
         this.addListListeners(this.lists)
-        this.addItemListeners(this.listItems)
     }
 
     /**
     *
-    * @param {HTMLElement[]} list All HTML list item elements in the listContainer
+    * @param {HTMLElement[]} list All HTML list item elements in the _listContainer
     */
     constructScrollBar(list) {
         const scrollBarContainer = document.createElement('div'),
@@ -171,17 +170,17 @@ export default class DragDrop extends Socket {
 
     /**
     * Add event listeners to list items for dragStart method
-    * @param {HTMLElement[]} items All HTML list item elements in the listContainer
+    * @param {HTMLElement[]} items All HTML list item elements in the _listContainer
     */
     addItemListeners(items) {
-        items.forEach(item => {
+        Array.prototype.forEach.call(items, item => {
             item.addEventListener('mousedown', e => this.dragStart(e), { bubbles: false })
         })
     }
 
     /**
     * Add event listeners to lists for scrollList method
-    * @param {HTMLElement[]} lists All HTML lists in the listContainer
+    * @param {HTMLElement[]} lists All HTML lists in the _listContainer
     */
     addListListeners(lists) {
         lists.forEach(list => {
@@ -193,21 +192,13 @@ export default class DragDrop extends Socket {
         window.addEventListener('resize', () => this.updateScrollBars())
     }
 
-    addContainerScrollListener() {
-        this.listContainer.addEventListener('mousewheel', e => {
-            if (e.target === this.listContainer) {
-                this.listContainer.scrollLeft += e.deltaY
-            }
-        })
-    }
-
     addMousePosListeners() {
         document.addEventListener('mousemove', e => this.mousePos = e)
     }
 
     addResetButtonListener() {
         this._resetButton.addEventListener('click', () => {
-            this.socket.emit('reset')
+            this._socket.emit('reset')
         })
     }
 
@@ -218,8 +209,8 @@ export default class DragDrop extends Socket {
     onMoveItem(positions) {
         const startPos = positions[0],
             endPos = positions[1],
-            elementToMove = this.listContainer.children[startPos.listIndex].children[1].children[startPos.itemIndex],
-            putList = this.listContainer.children[endPos.listIndex].children[1]
+            elementToMove = this._listContainer.children[startPos.listIndex].children[1].children[startPos.itemIndex],
+            putList = this._listContainer.children[endPos.listIndex].children[1]
 
         if (endPos.itemIndex >= putList.children.length)
             putList.children[endPos.itemIndex - 1].insertAdjacentElement('afterend', elementToMove)
@@ -234,7 +225,7 @@ export default class DragDrop extends Socket {
     */
     sendMoveItem() {
         if (this.currentStartPos !== this.currentEndPos) {
-            this.socket.emit('moveItem', [
+            this._socket.emit('moveItem', [
                 this.currentStartPos,
                 this.currentEndPos
             ])
