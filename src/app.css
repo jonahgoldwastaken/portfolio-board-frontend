@@ -16,6 +16,7 @@
     --picker-colour: hsl(var(--temporary-hue, var(--colour-hue)), 49%, 50%);
     --picker-hover-colour: hsl(var(--temporary-hue, var(--colour-hue)), 49%, 60%);
     --text-colour: #ffffff;
+    --link-colour: hsl(var(--colour-hue), 49%, 90%);
     --secondary-text: #fcfcfc;
 }
 

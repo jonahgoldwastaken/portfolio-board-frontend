@@ -120,11 +120,12 @@
 #drag-drop > main > section > ul > li > ul > li > a,
 #drag-drop .isDragging > ul > li > a {
   text-decoration: none;
-  transition: all 0.2s ease-in-out;
+  color: var(--link-colour);
 }
 
-#drag-drop > main > section > ul > li > ul > li > a:hover {
+#drag-drop > main > section > ul > li > ul > li > a:hover {
   text-decoration: underline;
+  color: var(--text-colour);
 }
 
 #drag-drop > main > section > ul > li > ul > li:not(:last-of-type),
