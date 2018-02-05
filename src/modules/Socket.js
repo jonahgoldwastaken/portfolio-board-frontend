@@ -6,7 +6,7 @@ export default class Socket
 
     constructor()
     {
-        this._socket = io('https://localhost:3000')
+        this._socket = io(process.env.ORIGIN || 'https://localhost:3000')
         this._socket.on('connect', () => {
             this._socket.on('serverMessage', msg => {
                 new HeadsUp('serverMessage', msg)
