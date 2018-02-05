@@ -65,6 +65,9 @@ module.exports = {
             filename: 'login/index.html',
             template: 'src/components/login/login.html'
         }),
-        new ExtractTextPlugin('app.css')
+        new ExtractTextPlugin('app.css'),
+        new Dotenv({
+            path: './.env'
+        })
     ]
 }
