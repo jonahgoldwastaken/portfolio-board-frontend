@@ -27,11 +27,13 @@
 .pop-up h1 {
     margin-top: 0;
     font-size: 1.4rem;
+    color: black;
 }
 
 .pop-up p {
     display: block;
     font-size: 1em;
+    color: black;
 }
 
 @keyframes slide-in-right {
