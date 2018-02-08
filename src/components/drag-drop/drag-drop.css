@@ -118,6 +118,11 @@
   margin-bottom: 0;
 }
 
+#drag-drop > main > section > ul > li > p + ul,
+#drag-drop .isDragging > p + ul {
+  margin-bottom: 0.6em;
+}
+
 #drag-drop > main > section > ul > li > ul > li > a,
 #drag-drop .isDragging > ul > li > a {
   text-decoration: none;
