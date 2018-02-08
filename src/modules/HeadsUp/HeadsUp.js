@@ -21,21 +21,14 @@ export default class HeadsUp
         return this._message
     }
 
-    set canSendNotifications(enabled) {
-        this._notificationsEnabled = enabled
-    }
-
-    get canSendNotifications() {
-        return this._notificationsEnabled
-    }
-
     constructor(type, msg) {
         this.type = type
         this.message = msg
         this.requestNotificationPermission()
             .then(result => result == 'granted' ? true : false)
-            .then(isEnabled => this.canSendNotifications = isEnabled)
-            .finally(() => this.canSendNotifications ?
+            .then(isEnabled => this._notificationsEnabled = isEnabled)
+            .catch(() => this._notificationsEnabled = false)
+            .finally(() => this._notificationsEnabled ?
                 this.sendNotification() :
                 this.createPopUp())
     }
