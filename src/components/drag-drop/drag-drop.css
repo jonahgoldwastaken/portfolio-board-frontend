@@ -120,7 +120,7 @@
 
 #drag-drop > main > section > ul > li > p + ul,
 #drag-drop .isDragging > p + ul {
-  margin-bottom: 0.6em;
+  margin-top: 0.4em;
 }
 
 #drag-drop > main > section > ul > li > ul > li > a,
